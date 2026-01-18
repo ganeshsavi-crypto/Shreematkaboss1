@@ -6,27 +6,23 @@
     <title>Shree Matka Boss - Daily Updates</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ===== BASIC STYLES ===== */
+        /* RESET & BASIC */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            font-family: 'Arial', sans-serif; 
-            background: #0f172a; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             color: white;
-            line-height: 1.6;
+            min-height: 100vh;
         }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 15px; }
         
-        /* ===== HEADER WITH LOGIN ===== */
+        /* HEADER */
         .header {
-            background: linear-gradient(90deg, #dc2626, #b91c1c);
+            background: linear-gradient(90deg, #dc2626 0%, #b91c1c 100%);
             padding: 15px 0;
             border-bottom: 3px solid #fbbf24;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         
         .header-content {
@@ -36,25 +32,17 @@
             flex-wrap: wrap;
         }
         
-        .logo h1 {
-            font-size: 28px;
-            margin-bottom: 5px;
-            color: white;
-        }
+        .logo h1 { font-size: 28px; margin-bottom: 5px; color: white; }
+        .logo .tagline { color: #fecaca; font-size: 14px; }
         
-        .logo .tagline {
-            color: #fecaca;
-            font-size: 14px;
-        }
-        
-        /* ===== LOGIN BUTTON ===== */
+        /* USER SECTION */
         .user-section {
             display: flex;
             align-items: center;
             gap: 15px;
         }
         
-        .login-btn, .logout-btn {
+        .auth-btn {
             background: #fbbf24;
             color: #78350f;
             padding: 8px 20px;
@@ -63,41 +51,38 @@
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
-        .login-btn:hover, .logout-btn:hover {
-            background: #f59e0b;
-            transform: scale(1.05);
-        }
+        .auth-btn:hover { background: #f59e0b; transform: scale(1.05); }
         
         .user-info {
             display: flex;
             align-items: center;
             gap: 10px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.1);
             padding: 8px 15px;
             border-radius: 20px;
         }
         
-        .username {
-            color: #fbbf24;
-            font-weight: bold;
-        }
+        .username { color: #fbbf24; font-weight: bold; }
         
-        /* ===== DISCLAIMER ===== */
+        /* DISCLAIMER */
         .disclaimer {
             background: #fbbf24;
             color: #78350f;
             padding: 12px;
             text-align: center;
-            font-size: 14px;
             margin: 10px 0;
             border-radius: 8px;
+            font-size: 14px;
         }
         
-        /* ===== DATE DISPLAY ===== */
+        /* DATE SECTION */
         .date-section {
-            background: rgba(30, 41, 59, 0.8);
+            background: rgba(30,41,59,0.8);
             margin: 20px auto;
             padding: 20px;
             border-radius: 12px;
@@ -106,49 +91,38 @@
             max-width: 800px;
         }
         
-        .date-section h2 {
-            color: #60a5fa;
-            margin-bottom: 10px;
-            font-size: 24px;
-        }
-        
-        #current-date {
-            font-size: 28px;
-            color: #fbbf24;
-            font-weight: bold;
-        }
-        
-        #current-time {
-            color: #94a3b8;
-            font-size: 18px;
-            margin-top: 10px;
-        }
+        .date-section h2 { color: #60a5fa; margin-bottom: 10px; }
+        #current-date { font-size: 28px; color: #fbbf24; font-weight: bold; }
+        #current-time { color: #94a3b8; margin-top: 10px; }
     </style>
 </head>
 <body>
-    <!-- HEADER WITH LOGIN -->
+    <!-- HEADER -->
     <div class="header">
         <div class="container">
             <div class="header-content">
                 <!-- Logo -->
                 <div class="logo">
                     <h1><i class="fas fa-crown"></i> SHREE MATKA BOSS</h1>
-                    <p class="tagline">Daily Number Updates -</p>
+                    <p class="tagline">Daily Number Updates - For Entertainment Only</p>
                 </div>
                 
-                <!-- User Section (Changes based on login status) -->
+                <!-- User Section -->
                 <div class="user-section">
+                    <!-- Logged Out View -->
                     <div id="logged-out-view">
-                        <button class="login-btn" onclick="showLoginModal()">
-                            <i class="fas fa-sign-in-alt"></i> Login / Sign Up
+                        <button class="auth-btn" onclick="showLoginModal()">
+                            <i class="fas fa-sign-in-alt"></i> Login
                         </button>
                     </div>
+                    
+                    <!-- Logged In View -->
                     <div id="logged-in-view" style="display: none;">
                         <div class="user-info">
-                            <i class="fas fa-user-circle" style="font-size: 24px;"></i>
+                            <i class="fas fa-user-circle"></i>
                             <span class="username" id="display-username">User</span>
                         </div>
-                        <button class="logout-btn" onclick="logout()">
+                        <button class="auth-btn" onclick="logout()">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </button>
                     </div>
@@ -160,8 +134,8 @@
     <!-- DISCLAIMER -->
     <div class="container">
         <div class="disclaimer">
-            <i class="fas fa-exclamation-triangle"></i> 
-            <strong>DISCLAIMER:</strong> Gambling is illegal.
+            <i class="fas fa-exclamation-triangle"></i>
+            <strong>DISCLAIMER:</strong> This site is for entertainment only. Gambling is illegal.
         </div>
     </div>
 
@@ -173,7 +147,7 @@
             <div id="current-time"></div>
         </div>
     </div>
-    <!-- LOGIN/SIGNUP MODAL -->
+    <!-- LOGIN MODAL -->
 <div id="login-modal" style="
     display: none;
     position: fixed;
@@ -181,50 +155,49 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0,0,0,0.85);
     z-index: 1000;
     align-items: center;
     justify-content: center;
 ">
     <div style="
         background: #1e293b;
-        padding: 40px;
         border-radius: 15px;
-        max-width: 400px;
-        width: 90%;
+        width: 95%;
+        max-width: 450px;
+        overflow: hidden;
         border: 2px solid #dc2626;
     ">
         <!-- Tabs -->
-        <div style="display: flex; margin-bottom: 30px; border-bottom: 1px solid #475569;">
-            <button id="tab-login" onclick="switchTab('login')" style="
+        <div style="display: flex; border-bottom: 1px solid #475569;">
+            <button onclick="switchAuthTab('login')" id="login-tab" style="
                 flex: 1;
-                background: none;
-                color: #fbbf24;
+                background: #dc2626;
+                color: white;
                 border: none;
                 padding: 15px;
-                font-size: 18px;
+                font-size: 16px;
                 font-weight: bold;
                 cursor: pointer;
-                border-bottom: 3px solid #fbbf24;
             ">
-                <i class="fas fa-sign-in-alt"></i> Login
+                <i class="fas fa-sign-in-alt"></i> LOGIN
             </button>
-            <button id="tab-signup" onclick="switchTab('signup')" style="
+            <button onclick="switchAuthTab('signup')" id="signup-tab" style="
                 flex: 1;
-                background: none;
+                background: #334155;
                 color: #94a3b8;
                 border: none;
                 padding: 15px;
-                font-size: 18px;
+                font-size: 16px;
                 cursor: pointer;
             ">
-                <i class="fas fa-user-plus"></i> Sign Up
+                <i class="fas fa-user-plus"></i> SIGN UP
             </button>
         </div>
         
         <!-- Login Form -->
-        <div id="login-form">
-            <h3 style="color: #f1f5f9; margin-bottom: 25px; text-align: center;">
+        <div id="login-form-container" style="padding: 30px;">
+            <h3 style="text-align: center; color: #f1f5f9; margin-bottom: 25px;">
                 Login to Your Account
             </h3>
             
@@ -234,7 +207,7 @@
                 </label>
                 <input type="text" id="login-username" placeholder="Enter username" style="
                     width: 100%;
-                    padding: 12px;
+                    padding: 12px 15px;
                     border: 1px solid #475569;
                     border-radius: 8px;
                     background: #0f172a;
@@ -249,7 +222,7 @@
                 </label>
                 <input type="password" id="login-password" placeholder="Enter password" style="
                     width: 100%;
-                    padding: 12px;
+                    padding: 12px 15px;
                     border: 1px solid #475569;
                     border-radius: 8px;
                     background: #0f172a;
@@ -258,7 +231,7 @@
                 ">
             </div>
             
-            <button onclick="login()" style="
+            <button onclick="performLogin()" style="
                 width: 100%;
                 background: linear-gradient(90deg, #dc2626, #b91c1c);
                 color: white;
@@ -270,20 +243,21 @@
                 cursor: pointer;
                 margin-bottom: 15px;
             ">
-                <i class="fas fa-sign-in-alt"></i> Login
+                <i class="fas fa-sign-in-alt"></i> LOGIN
             </button>
             
             <div style="text-align: center; color: #94a3b8; font-size: 14px;">
-                Don't have account? 
-                <a href="javascript:void(0)" onclick="switchTab('signup')" style="color: #60a5fa;">
+                Don't have an account? 
+                <a href="javascript:void(0)" onclick="switchAuthTab('signup')" 
+                   style="color: #60a5fa; text-decoration: none;">
                     Sign up here
                 </a>
             </div>
         </div>
         
-        <!-- Signup Form (Hidden by default) -->
-        <div id="signup-form" style="display: none;">
-            <h3 style="color: #f1f5f9; margin-bottom: 25px; text-align: center;">
+        <!-- Signup Form -->
+        <div id="signup-form-container" style="display: none; padding: 30px;">
+            <h3 style="text-align: center; color: #f1f5f9; margin-bottom: 25px;">
                 Create New Account
             </h3>
             
@@ -293,7 +267,7 @@
                 </label>
                 <input type="text" id="signup-name" placeholder="Enter full name" style="
                     width: 100%;
-                    padding: 12px;
+                    padding: 12px 15px;
                     border: 1px solid #475569;
                     border-radius: 8px;
                     background: #0f172a;
@@ -308,22 +282,7 @@
                 </label>
                 <input type="text" id="signup-username" placeholder="Choose username" style="
                     width: 100%;
-                    padding: 12px;
-                    border: 1px solid #475569;
-                    border-radius: 8px;
-                    background: #0f172a;
-                    color: white;
-                    font-size: 16px;
-                ">
-            </div>
-            
-            <div style="margin-bottom: 15px;">
-                <label style="display: block; color: #94a3b8; margin-bottom: 8px;">
-                    <i class="fas fa-envelope"></i> Email (Optional)
-                </label>
-                <input type="email" id="signup-email" placeholder="Enter email" style="
-                    width: 100%;
-                    padding: 12px;
+                    padding: 12px 15px;
                     border: 1px solid #475569;
                     border-radius: 8px;
                     background: #0f172a;
@@ -336,9 +295,9 @@
                 <label style="display: block; color: #94a3b8; margin-bottom: 8px;">
                     <i class="fas fa-lock"></i> Password
                 </label>
-                <input type="password" id="signup-password" placeholder="Create password" style="
+                <input type="password" id="signup-password" placeholder="Create password (min. 6 chars)" style="
                     width: 100%;
-                    padding: 12px;
+                    padding: 12px 15px;
                     border: 1px solid #475569;
                     border-radius: 8px;
                     background: #0f172a;
@@ -353,7 +312,7 @@
                 </label>
                 <input type="password" id="signup-confirm" placeholder="Confirm password" style="
                     width: 100%;
-                    padding: 12px;
+                    padding: 12px 15px;
                     border: 1px solid #475569;
                     border-radius: 8px;
                     background: #0f172a;
@@ -362,7 +321,7 @@
                 ">
             </div>
             
-            <button onclick="signup()" style="
+            <button onclick="performSignup()" style="
                 width: 100%;
                 background: linear-gradient(90deg, #10b981, #059669);
                 color: white;
@@ -374,86 +333,202 @@
                 cursor: pointer;
                 margin-bottom: 15px;
             ">
-                <i class="fas fa-user-plus"></i> Create Account
+                <i class="fas fa-user-plus"></i> CREATE ACCOUNT
             </button>
             
             <div style="text-align: center; color: #94a3b8; font-size: 14px;">
-                Already have account? 
-                <a href="javascript:void(0)" onclick="switchTab('login')" style="color: #60a5fa;">
+                Already have an account? 
+                <a href="javascript:void(0)" onclick="switchAuthTab('login')" 
+                   style="color: #60a5fa; text-decoration: none;">
                     Login here
                 </a>
             </div>
         </div>
         
         <!-- Close Button -->
-        <button onclick="hideLoginModal()" style="
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: #94a3b8;
-            font-size: 20px;
-            cursor: pointer;
-        ">
-            <i class="fas fa-times"></i>
-        </button>
-        
-        <!-- Message Display -->
-        <div id="auth-message" style="
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
-            display: none;
-        "></div>
-    </div>
-</div>
-<!-- MARKETS GRID -->
-<div class="container">
-    <div class="markets-section">
-        <h2 style="text-align: center; margin: 30px 0 20px 0; color: #f1f5f9;">
-            <i class="fas fa-chart-line"></i> Today's Market Timings
-        </h2>
-        <p style="text-align: center; color: #94a3b8; margin-bottom: 30px;">
-            Click on any market to view today's numbers
-        </p>
-        
-        <!-- Premium Message (Shows when not logged in) -->
-        <div id="premium-message" style="
-            background: linear-gradient(90deg, #f59e0b, #d97706);
-            color: #78350f;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            margin-bottom: 25px;
-            display: none;
-        ">
-            <h3 style="margin-bottom: 10px;">
-                <i class="fas fa-crown"></i> Premium Access Required
-            </h3>
-            <p>Login to view all market numbers and get premium predictions!</p>
-            <button onclick="showLoginModal()" style="
-                background: #78350f;
-                color: white;
-                padding: 10px 25px;
+        <div style="position: absolute; top: 10px; right: 10px;">
+            <button onclick="closeLoginModal()" style="
+                background: none;
                 border: none;
-                border-radius: 20px;
-                margin-top: 10px;
+                color: #94a3b8;
+                font-size: 24px;
                 cursor: pointer;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             ">
-                <i class="fas fa-lock-open"></i> Login Now
+                <i class="fas fa-times"></i>
             </button>
         </div>
         
+        <!-- Message Display -->
+        <div id="auth-message" style="
+            padding: 12px 20px;
+            margin: 0 30px 20px;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+            font-size: 14px;
+        "></div>
+    </div>
+    </div>
+    <!-- PREMIUM BANNER -->
+<div class="container">
+    <div id="premium-banner" style="
+        background: linear-gradient(90deg, #f59e0b, #d97706);
+        color: #78350f;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        margin: 20px 0;
+        display: none;
+    ">
+        <h3 style="margin-bottom: 10px;">
+            <i class="fas fa-crown"></i> GET PREMIUM ACCESS
+        </h3>
+        <p>Login to view all market numbers and premium predictions!</p>
+        <button onclick="showLoginModal()" style="
+            background: #78350f;
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        ">
+            <i class="fas fa-lock-open"></i> LOGIN NOW
+        </button>
+    </div>
+</div>
+
+<!-- MARKETS SECTION -->
+<div class="container">
+    <div class="markets-section">
+        <h2 style="text-align: center; margin: 20px 0; color: #f1f5f9; font-size: 28px;">
+            <i class="fas fa-chart-line"></i> Today's Market Timings
+        </h2>
+        <p style="text-align: center; color: #94a3b8; margin-bottom: 30px;">
+            Click on any market to view today's predictions
+        </p>
+        
         <div class="markets-grid" id="markets-grid">
-            <!-- Market cards loaded by JavaScript -->
+            <!-- Markets loaded by JavaScript -->
+        </div>
+    </div>
+</div>
+
+<!-- NUMBERS DISPLAY -->
+<div id="numbers-display" style="display: none;">
+    <div class="container">
+        <button onclick="goBackToMarkets()" style="
+            background: #dc2626;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        ">
+            <i class="fas fa-arrow-left"></i> Back to Markets
+        </button>
+        
+        <div style="
+            background: rgba(30,41,59,0.8);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        ">
+            <h2 id="market-title" style="
+                color: #fbbf24;
+                font-size: 28px;
+                margin-bottom: 10px;
+            "></h2>
+            
+            <p id="market-time" style="
+                color: #60a5fa;
+                font-size: 18px;
+                margin-bottom: 20px;
+            "></p>
+            
+            <!-- Login Required Message -->
+            <div id="login-required-message" style="
+                background: linear-gradient(90deg, #f59e0b, #d97706);
+                color: #78350f;
+                padding: 30px;
+                border-radius: 10px;
+                text-align: center;
+                margin: 20px 0;
+                display: none;
+            ">
+                <h3 style="margin-bottom: 15px; font-size: 24px;">
+                    <i class="fas fa-lock"></i> LOGIN REQUIRED
+                </h3>
+                <p style="margin-bottom: 20px; font-size: 16px;">
+                    This market requires premium access. Login to view numbers.
+                </p>
+                <button onclick="showLoginModal()" style="
+                    background: #78350f;
+                    color: white;
+                    padding: 12px 30px;
+                    border: none;
+                    border-radius: 25px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    cursor: pointer;
+                ">
+                    <i class="fas fa-sign-in-alt"></i> LOGIN NOW
+                </button>
+            </div>
+            
+            <!-- Numbers Display -->
+            <div id="numbers-content" style="display: none;">
+                <div style="display: flex; gap: 30px; margin: 30px 0; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <h3 style="color: #fca5a5; margin-bottom: 15px; font-size: 20px;">
+                            <i class="fas fa-dice-one"></i> Single Numbers (1-9)
+                        </h3>
+                        <div class="numbers-grid" id="single-numbers">
+                            <!-- Numbers loaded here -->
+                        </div>
+                    </div>
+                    
+                    <div style="flex: 1; min-width: 300px;">
+                        <h3 style="color: #93c5fd; margin-bottom: 15px; font-size: 20px;">
+                            <i class="fas fa-dice-two"></i> Double Numbers (10-99)
+                        </h3>
+                        <div class="numbers-grid" id="double-numbers">
+                            <!-- Numbers loaded here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="
+                    background: rgba(251,191,36,0.1);
+                    border: 1px solid #fbbf24;
+                    padding: 15px;
+                    border-radius: 8px;
+                    margin-top: 20px;
+                    color: #fbbf24;
+                ">
+                    <p><i class="fas fa-info-circle"></i> 
+                        <strong>Note:</strong> These numbers are for entertainment only.
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <style>
-    /* ===== MARKETS GRID STYLES ===== */
+    /* MARKETS GRID */
     .markets-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -470,24 +545,21 @@
         border: 1px solid #475569;
         position: relative;
         min-height: 140px;
-        display: flex;
-        flex-direction: column;
     }
     
     .market-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(220, 38, 38, 0.2);
+        box-shadow: 0 10px 25px rgba(220,38,38,0.2);
         border-color: #dc2626;
     }
     
-    .market-card.premium {
+    .market-card.locked {
         background: linear-gradient(135deg, #1e293b, #1e40af);
         border: 2px dashed #fbbf24;
-        position: relative;
-        overflow: hidden;
+        opacity: 0.8;
     }
     
-    .market-card.premium::after {
+    .market-card.locked::after {
         content: "PREMIUM";
         position: absolute;
         top: 10px;
@@ -513,7 +585,7 @@
     }
     
     .time-badge {
-        background: rgba(220, 38, 38, 0.2);
+        background: rgba(220,38,38,0.2);
         color: #fca5a5;
         padding: 6px 15px;
         border-radius: 20px;
@@ -522,7 +594,7 @@
     }
     
     .market-status {
-        margin-top: auto;
+        margin-top: 15px;
     }
     
     .status {
@@ -531,317 +603,15 @@
         border-radius: 20px;
         font-size: 13px;
         font-weight: bold;
-        margin-bottom: 10px;
     }
     
-    .status.open {
-        background: rgba(34, 197, 94, 0.2);
-        color: #86efac;
-    }
+    .status.open { background: rgba(34,197,94,0.2); color: #86efac; }
+    .status.upcoming { background: rgba(249,115,22,0.2); color: #fdba74; }
+    .status.closed { background: rgba(239,68,68,0.2); color: #fca5a5; }
     
-    .status.upcoming {
-        background: rgba(249, 115, 22, 0.2);
-        color: #fdba74;
-    }
+    .market-desc { color: #94a3b8; font-size: 14px; margin-top: 5px; }
     
-    .status.closed {
-        background: rgba(239, 68, 68, 0.2);
-        color: #fca5a5;
-    }
-    
-    .market-desc {
-        color: #94a3b8;
-        font-size: 14px;
-    }
-    
-    .market-card i {
-        position: absolute;
-        right: 20px;
-        bottom: 20px;
-        color: #64748b;
-        font-size: 18px;
-    }
-    
-    /* Market color borders */
-    .market-card[data-type="morning"] { border-left: 5px solid #f59e0b; }
-    .market-card[data-type="afternoon"] { border-left: 5px solid #10b981; }
-    .market-card[data-type="evening"] { border-left: 5px solid #8b5cf6; }
-    .market-card[data-type="night"] { border-left: 5px solid #3b82f6; }
-</style>
-<!-- NUMBERS DISPLAY AREA -->
-<div id="numbers-display" class="numbers-container" style="display: none;">
-    <div class="container">
-        <button class="back-btn" onclick="showMarkets()" style="
-            background: #dc2626;
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        ">
-            <i class="fas fa-arrow-left"></i> Back to Markets
-        </button>
-        
-        <div class="market-info" style="
-            background: rgba(30, 41, 59, 0.8);
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-        ">
-            <h2 id="market-title" style="
-                color: #fbbf24;
-                font-size: 28px;
-                margin-bottom: 10px;
-            "></h2>
-            
-            <p id="market-time" style="
-                color: #60a5fa;
-                font-size: 18px;
-                margin-bottom: 20px;
-            "></p>
-            
-            <!-- Login Required Message -->
-            <div id="numbers-login-required" style="
-                background: linear-gradient(90deg, #f59e0b, #d97706);
-                color: #78350f;
-                padding: 30px;
-                border-radius: 10px;
-                text-align: center;
-                margin: 20px 0;
-                display: none;
-            ">
-                <h3 style="margin-bottom: 15px; font-size: 24px;">
-                    <i class="fas fa-lock"></i> Login Required
-                </h3>
-                <p style="margin-bottom: 20px; font-size: 16px;">
-                    You need to login to view the numbers for this market.
-                </p>
-                <button onclick="showLoginModal()" style="
-                    background: #78350f;
-                    color: white;
-                    padding: 12px 30px;
-                    border: none;
-                    border-radius: 25px;
-                    font-size: 16px;
-                    font-weight: bold;
-                    cursor: pointer;
-                ">
-                    <i class="fas fa-sign-in-alt"></i> Login Now
-                </button>
-            </div>
-            
-            <!-- Numbers Display (Shown when logged in) -->
-            <div id="numbers-display-content" style="display: none;">
-                <div style="display: flex; gap: 30px; margin: 30px 0; flex-wrap: wrap;">
-                    <!-- Single Numbers -->
-                    <div style="flex: 1; min-width: 300px;">
-                        <h3 style="color: #fca5a5; margin-bottom: 15px; font-size: 20px;">
-                            <i class="fas fa-dice-one"></i> Single Numbers (1-9)
-                        </h3>
-                        <div class="numbers-grid" id="single-numbers">
-                            <!-- Single numbers will be loaded here -->
-                        </div>
-                    </div>
-                    
-                    <!-- Double Numbers -->
-                    <div style="flex: 1; min-width: 300px;">
-                        <h3 style="color: #93c5fd; margin-bottom: 15px; font-size: 20px;">
-                            <i class="fas fa-dice-two"></i> Double Numbers (10-99)
-                        </h3>
-                        <div class="numbers-grid" id="double-numbers">
-                            <!-- Double numbers will be loaded here -->
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="note-box" style="
-                    background: rgba(251, 191, 36, 0.1);
-                    border: 1px solid #fbbf24;
-                    padding: 15px;
-                    border-radius: 8px;
-                    margin-top: 20px;
-                    color: #fbbf24;
-                ">
-                    <p><i class="fas fa-info-circle"></i> 
-                        <strong>Note:</strong> .
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- CONTACT SECTION -->
-<div class="container">
-    <div class="contact-section" style="
-        background: linear-gradient(135deg, #1e293b, #334155);
-        padding: 30px;
-        border-radius: 15px;
-        margin: 40px 0;
-        border: 2px solid rgba(220, 38, 38, 0.3);
-        text-align: center;
-    ">
-        <h3 style="color: #f1f5f9; margin-bottom: 15px; font-size: 24px;">
-            <i class="fas fa-phone-alt"></i> Contact For Premium Tips
-        </h3>
-        
-        <p style="color: #94a3b8; margin-bottom: 25px; font-size: 16px;">
-            For single open and single jodi fix game predictions
-        </p>
-        
-        <div style="
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        ">
-            <div style="
-                display: flex;
-                align-items: center;
-                gap: 15px;
-                text-align: left;
-            ">
-                <div style="font-size: 28px; color: #dc2626;">
-                    <i class="fas fa-mobile-alt"></i>
-                </div>
-                <div>
-                    <div style="color: #94a3b8; font-size: 14px;">Mobile Number</div>
-                    <div style="color: white; font-size: 24px; font-weight: bold;">
-                        +91 73535 47650
-                    </div>
-                </div>
-            </div>
-            
-            <div style="
-                display: flex;
-                align-items: center;
-                gap: 15px;
-                text-align: left;
-            ">
-                <div style="font-size: 28px; color: #fbbf24;">
-                    <i class="fas fa-clock"></i>
-                </div>
-                <div>
-                    <div style="color: #94a3b8; font-size: 14px;">Available</div>
-                    <div style="color: white; font-size: 20px; font-weight: bold;">
-                        10:00 AM - 10:00 PM
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <button onclick="showContactInfo()" style="
-            background: linear-gradient(90deg, #dc2626, #b91c1c);
-            color: white;
-            padding: 15px 35px;
-            border: none;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: all 0.3s;
-        ">
-            <i class="fas fa-comments"></i> Contact Now
-        </button>
-    </div>
-</div>
-<!-- CONTACT INFO MODAL -->
-<div id="contact-modal" style="
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-">
-    <div style="
-        background: #1e293b;
-        padding: 40px;
-        border-radius: 15px;
-        max-width: 500px;
-        width: 90%;
-        border: 2px solid #dc2626;
-    ">
-        <h3 style="color: #fbbf24; margin-bottom: 20px; font-size: 24px;">
-            <i class="fas fa-headset"></i> Contact Information
-        </h3>
-        
-        <div style="margin: 20px 0;">
-            <div style="color: #94a3b8; margin-bottom: 5px;">WhatsApp:</div>
-            <div style="color: white; font-size: 20px; font-weight: bold;">
-                +91 73535 47650
-            </div>
-        </div>
-        
-        <div style="margin: 20px 0;">
-            <div style="color: #94a3b8; margin-bottom: 5px;">Direct Call:</div>
-            <div style="color: white; font-size: 20px; font-weight: bold;">
-                +91 73535 47650
-            </div>
-        </div>
-        
-        <div style="margin: 25px 0;">
-            <h4 style="color: #60a5fa; margin-bottom: 10px;">
-                <i class="fas fa-clock"></i> Available Hours:
-            </h4>
-            <ul style="color: #cbd5e1; padding-left: 20px;">
-                <li>Morning: 9:00 AM - 12:00 PM</li>
-                <li>Afternoon: 2:00 PM - 5:00 PM</li>
-                <li>Evening: 7:00 PM - 10:00 PM</li>
-            </ul>
-        </div>
-        
-        <button onclick="hideContactInfo()" style="
-            background: #dc2626;
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-        ">
-            Close
-        </button>
-    </div>
-</div>
-
-<!-- FOOTER -->
-<div class="footer" style="
-    background: #0f172a;
-    padding: 25px 0;
-    text-align: center;
-    margin-top: 40px;
-    border-top: 1px solid #334155;
-">
-    <div class="container">
-        <p style="color: #94a3b8; margin-bottom: 10px;">
-            &copy; 2024 Shree Matka Boss. All rights reserved.
-        </p>
-        <p style="color: #64748b; font-size: 14px; max-width: 800px; margin: 0 auto;">
-            <i class="fas fa-exclamation-circle"></i>. 
-            We do not promote gambling. Numbers are for demonstration only.
-        </p>
-        <p style="color: #475569; margin-top: 15px; font-size: 13px;">
-            <i class="fas fa-shield-alt"></i> Stay Safe | 
-            <i class="fas fa-heart"></i> Play Responsibly
-        </p>
-    </div>
-</div>
-
-<style>
-    /* ===== NUMBERS DISPLAY STYLES ===== */
+    /* Numbers Grid */
     .numbers-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -850,7 +620,7 @@
     }
     
     .number-box {
-        background: rgba(30, 41, 59, 0.9);
+        background: rgba(30,41,59,0.9);
         padding: 25px 10px;
         text-align: center;
         border-radius: 10px;
@@ -863,53 +633,36 @@
         min-height: 90px;
     }
     
-    .single-box {
-        border-color: #dc2626;
-        color: #fca5a5;
-        background: rgba(220, 38, 38, 0.1);
-    }
-    
-    .double-box {
-        border-color: #3b82f6;
-        color: #93c5fd;
-        background: rgba(59, 130, 246, 0.1);
-    }
+    .single-box { border-color: #dc2626; color: #fca5a5; }
+    .double-box { border-color: #3b82f6; color: #93c5fd; }
 </style>
-
 <script>
     // ============================================
-    // AUTHENTICATION SYSTEM
+    // AUTHENTICATION SYSTEM - SIMPLE & WORKING
     // ============================================
     
-    // Demo users database (in real app, use backend)
-    const demoUsers = {
-        'admin': { 
-            password: 'savitha123', 
-            name: 'savitha',
-            email: 'admin@example.com',
-            isPremium: true
+    // Default admin user (always exists)
+    const DEFAULT_USERS = {
+        'admin': {
+            name: 'Admin User',
+            password: 'admin123',
+            email: 'admin@matkaboss.com',
+            isPremium: true,
+            createdAt: new Date().toISOString()
         },
-        'user1': { 
-            password: 'user123', 
+        'demo': {
             name: 'Demo User',
-            email: 'user@example.com',
-            isPremium: false
+            password: 'demo123',
+            email: 'demo@matkaboss.com',
+            isPremium: false,
+            createdAt: new Date().toISOString()
         }
     };
     
-    // Current user session
+    // Current user
     let currentUser = null;
     
-    // Manual numbers data
-    const manualNumbers = {
-        'sridevi': { singles: [3,7,2,5], doubles: [34,67,89,12] },
-        'milan': { singles: [4,8,1,6], doubles: [45,78,23,56] },
-        'kalyan': { singles: [2,9,4,7], doubles: [67,34,89,21] },
-        'sridevi-night': { singles: [5,3,8,2], doubles: [78,45,32,67] },
-        'milan-night': { singles: [6,2,9,4], doubles: [89,56,43,78] },
-        'main-bazar': { singles: [7,5,3,8], doubles: [91,67,34,89] }
-    };
-    
+    // Market data
     const markets = [
         { id: 'sridevi', name: 'Sridevi', time: '10:00 AM', type: 'morning', premium: false },
         { id: 'milan', name: 'Milan Day', time: '1:30 PM', type: 'afternoon', premium: false },
@@ -918,427 +671,759 @@
         { id: 'milan-night', name: 'Milan Night', time: '8:00 PM', type: 'evening', premium: true },
         { id: 'main-bazar', name: 'Main Bazar', time: '8:30 PM', type: 'night', premium: true }
     ];
-            // === INITIALIZE ===
-        document.addEventListener('DOMContentLoaded', function() {
-            updateDateTime();
-            checkLoginStatus();
-            loadMarketCards();
-            updateMarketStatus();
-            
-            setInterval(updateDateTime, 1000);
-            setInterval(updateMarketStatus, 60000);
-        });
+    
+    // Numbers data
+    const marketNumbers = {
+        'sridevi': { singles: [3,7,2,5], doubles: [34,67,89,12] },
+        'milan': { singles: [4,8,1,6], doubles: [45,78,23,56] },
+        'kalyan': { singles: [2,9,4,7], doubles: [67,34,89,21] },
+        'sridevi-night': { singles: [5,3,8,2], doubles: [78,45,32,67] },
+        'milan-night': { singles: [6,2,9,4], doubles: [89,56,43,78] },
+        'main-bazar': { singles: [7,5,3,8], doubles: [91,67,34,89] }
+    };
+    
+    // ============================================
+    // INITIALIZATION
+    // ============================================
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        initApp();
+    });
+    
+    function initApp() {
+        // Initialize storage
+        initStorage();
         
-        // === CHECK LOGIN STATUS ===
-        function checkLoginStatus() {
-            const savedUser = localStorage.getItem('matkaUser');
-            if (savedUser) {
-                try {
-                    currentUser = JSON.parse(savedUser);
-                    updateUIForLoggedIn();
-                } catch(e) {
-                    logout();
-                }
-            }
+        // Check login status
+        checkLogin();
+        
+        // Update date/time
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+        
+        // Load markets
+        loadMarkets();
+        
+        // Update market status
+        updateMarketStatus();
+        setInterval(updateMarketStatus, 60000);
+    }
+    
+    // ============================================
+    // STORAGE MANAGEMENT
+    // ============================================
+    
+    function initStorage() {
+        // Get users from localStorage or create default
+        let users = localStorage.getItem('matka_users');
+        if (!users) {
+            localStorage.setItem('matka_users', JSON.stringify(DEFAULT_USERS));
         }
-        
-        // === UPDATE UI BASED ON LOGIN ===
-        function updateUIForLoggedIn() {
-            // Update header
-            document.getElementById('logged-out-view').style.display = 'none';
-            document.getElementById('logged-in-view').style.display = 'flex';
-            document.getElementById('display-username').textContent = currentUser.username;
-            
-            // Show/hide premium message
-            document.getElementById('premium-message').style.display = currentUser.isPremium ? 'none' : 'block';
-            
-            // Reload markets to show/hide premium content
-            loadMarketCards();
-        }
-        
-        function updateUIForLoggedOut() {
-            document.getElementById('logged-out-view').style.display = 'block';
-            document.getElementById('logged-in-view').style.display = 'none';
-            document.getElementById('premium-message').style.display = 'block';
-            loadMarketCards();
-        }
-        
-        // === LOGIN MODAL FUNCTIONS ===
-        function showLoginModal() {
-            document.getElementById('login-modal').style.display = 'flex';
-            switchTab('login');
-        }
-        
-        function hideLoginModal() {
-            document.getElementById('login-modal').style.display = 'none';
-            clearAuthForms();
-        }
-        
-        function switchTab(tab) {
-            if (tab === 'login') {
-                document.getElementById('login-form').style.display = 'block';
-                document.getElementById('signup-form').style.display = 'none';
-                document.getElementById('tab-login').style.color = '#fbbf24';
-                document.getElementById('tab-login').style.borderBottom = '3px solid #fbbf24';
-                document.getElementById('tab-signup').style.color = '#94a3b8';
-                document.getElementById('tab-signup').style.borderBottom = 'none';
-            } else {
-                document.getElementById('login-form').style.display = 'none';
-                document.getElementById('signup-form').style.display = 'block';
-                document.getElementById('tab-signup').style.color = '#fbbf24';
-                document.getElementById('tab-signup').style.borderBottom = '3px solid #fbbf24';
-                document.getElementById('tab-login').style.color = '#94a3b8';
-                document.getElementById('tab-login').style.borderBottom = 'none';
-            }
-            clearAuthMessage();
-        }
-        
-        // === LOGIN FUNCTION ===
-        function login() {
-            const username = document.getElementById('login-username').value.trim();
-            const password = document.getElementById('login-password').value;
-            
-            if (!username || !password) {
-                showAuthMessage('Please enter username and password', 'error');
-                return;
-            }
-            
-            // Check demo users
-            if (demoUsers[username] && demoUsers[username].password === password) {
-                currentUser = {
-                    username: username,
-                    name: demoUsers[username].name,
-                    email: demoUsers[username].email,
-                    isPremium: demoUsers[username].isPremium
-                };
-                
-                // Save to localStorage
-                localStorage.setItem('matkaUser', JSON.stringify(currentUser));
-                
-                showAuthMessage('Login successful! Redirecting...', 'success');
-                
-                setTimeout(() => {
-                    hideLoginModal();
-                    updateUIForLoggedIn();
-                }, 1500);
-                
-            } else {
-                showAuthMessage('Invalid username or password', 'error');
-            }
-        }
-        
-        // === SIGNUP FUNCTION ===
-        function signup() {
-            const name = document.getElementById('signup-name').value.trim();
-            const username = document.getElementById('signup-username').value.trim();
-            const email = document.getElementById('signup-email').value.trim();
-            const password = document.getElementById('signup-password').value;
-            const confirm = document.getElementById('signup-confirm').value;
-            
-            // Validation
-            if (!name || !username || !password) {
-                showAuthMessage('Please fill all required fields', 'error');
-                return;
-            }
-            
-            if (password !== confirm) {
-                showAuthMessage('Passwords do not match', 'error');
-                return;
-            }
-            
-            if (password.length < 6) {
-                showAuthMessage('Password must be at least 6 characters', 'error');
-                return;
-            }
-            
-            if (demoUsers[username]) {
-                showAuthMessage('Username already exists', 'error');
-                return;
-            }
-            
-            // Create new user (in localStorage only - for demo)
-            const newUser = {
-                username: username,
-                name: name,
-                email: email,
-                isPremium: false, // New users get free trial
-                password: password // In real app, NEVER store password like this
-            };
-            
-            // Add to demo users
-            demoUsers[username] = { 
-                password: password, 
-                name: name,
-                email: email,
-                isPremium: false
-            };
-            
-            // Login the new user
-            currentUser = newUser;
-            localStorage.setItem('matkaUser', JSON.stringify(currentUser));
-            
-            showAuthMessage('Account created successfully! You get 7-day free premium trial.', 'success');
-            
-            setTimeout(() => {
-                hideLoginModal();
+    }
+    
+    function getUsers() {
+        const usersStr = localStorage.getItem('matka_users');
+        return usersStr ? JSON.parse(usersStr) : DEFAULT_USERS;
+    }
+    
+    function saveUsers(users) {
+        localStorage.setItem('matka_users', JSON.stringify(users));
+    }
+    
+    // ============================================
+    // AUTHENTICATION FUNCTIONS
+    // ============================================
+    
+    function checkLogin() {
+        const userData = localStorage.getItem('current_user');
+        if (userData) {
+            try {
+                currentUser = JSON.parse(userData);
                 updateUIForLoggedIn();
-            }, 2000);
-        }
-        
-        // === LOGOUT ===
-        function logout() {
-            currentUser = null;
-            localStorage.removeItem('matkaUser');
-            updateUIForLoggedOut();
-            showMarkets(); // Go back to markets page
-        }
-        
-        // === AUTH MESSAGE HELPER ===
-        function showAuthMessage(message, type) {
-            const msgDiv = document.getElementById('auth-message');
-            msgDiv.textContent = message;
-            msgDiv.style.display = 'block';
-            msgDiv.style.background = type === 'success' ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)';
-            msgDiv.style.color = type === 'success' ? '#86efac' : '#fca5a5';
-            msgDiv.style.border = type === 'success' ? '1px solid #86efac' : '1px solid #fca5a5';
-        }
-        
-        function clearAuthMessage() {
-            document.getElementById('auth-message').style.display = 'none';
-        }
-        
-        function clearAuthForms() {
-            document.getElementById('login-username').value = '';
-            document.getElementById('login-password').value = '';
-            document.getElementById('signup-name').value = '';
-            document.getElementById('signup-username').value = '';
-            document.getElementById('signup-email').value = '';
-            document.getElementById('signup-password').value = '';
-            document.getElementById('signup-confirm').value = '';
-            clearAuthMessage();
-        }
-        
-        // === LOAD MARKET CARDS ===
-        function loadMarketCards() {
-            const grid = document.getElementById('markets-grid');
-            let html = '';
-            
-            markets.forEach(market => {
-                const status = getMarketStatus(market.time);
-                const isLocked = market.premium && (!currentUser || !currentUser.isPremium);
-                
-                html += `
-                    <div class="market-card ${isLocked ? 'premium' : ''}" 
-                         data-type="${market.type}" 
-                         onclick="${isLocked ? 'showPremiumMessage()' : `showMarketNumbers('${market.id}')`}">
-                        <div class="market-header">
-                            <h3>${market.name} ${isLocked ? '🔒' : ''}</h3>
-                            <span class="time-badge">${market.time}</span>
-                        </div>
-                        <div class="market-status">
-                            <span class="status ${status}">${status.toUpperCase()}</span>
-                            <p class="market-desc">
-                                ${market.type} Market 
-                                ${isLocked ? '• Premium Access Required' : ''}
-                            </p>
-                        </div>
-                        <i class="fas ${isLocked ? 'fa-lock' : 'fa-arrow-right'}"></i>
-                    </div>
-                `;
-            });
-            
-            grid.innerHTML = html;
-        }
-        
-        // === SHOW PREMIUM MESSAGE ===
-        function showPremiumMessage() {
-            showAuthMessageInMain('Login and upgrade to premium to access all markets!');
-        }
-        
-        function showAuthMessageInMain(message) {
-            // Create or update message display
-            let msgDiv = document.getElementById('main-message');
-            if (!msgDiv) {
-                msgDiv = document.createElement('div');
-                msgDiv.id = 'main-message';
-                msgDiv.style.cssText = `
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    background: #f59e0b;
-                    color: #78350f;
-                    padding: 15px 25px;
-                    border-radius: 8px;
-                    z-index: 1001;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-                `;
-                document.body.appendChild(msgDiv);
+                return true;
+            } catch(e) {
+                logout();
+                return false;
             }
-            
-            msgDiv.innerHTML = `
-                ${message}
-                <button onclick="showLoginModal()" style="
+        }
+        updateUIForLoggedOut();
+        return false;
+    }
+    
+    function updateUIForLoggedIn() {
+        // Update header
+        document.getElementById('logged-out-view').style.display = 'none';
+        document.getElementById('logged-in-view').style.display = 'flex';
+        document.getElementById('display-username').textContent = currentUser.username;
+        
+        // Update premium banner
+        const premiumBanner = document.getElementById('premium-banner');
+        if (currentUser.isPremium) {
+            premiumBanner.style.display = 'none';
+        } else {
+            premiumBanner.style.display = 'block';
+            premiumBanner.innerHTML = `
+                <h3 style="margin-bottom: 10px;">
+                    <i class="fas fa-crown"></i> UPGRADE TO PREMIUM
+                </h3>
+                <p>Welcome ${currentUser.name}! Upgrade for all market access.</p>
+                <button onclick="showUpgradeModal()" style="
                     background: #78350f;
                     color: white;
+                    padding: 10px 25px;
                     border: none;
-                    padding: 5px 15px;
-                    border-radius: 15px;
-                    margin-left: 15px;
+                    border-radius: 20px;
+                    margin-top: 10px;
                     cursor: pointer;
-                ">Login</button>
-                <button onclick="this.parentElement.remove()" style="
-                    background: none;
-                    border: none;
-                    color: #78350f;
-                    margin-left: 10px;
-                    cursor: pointer;
-                ">×</button>
+                    font-weight: bold;
+                ">
+                    <i class="fas fa-crown"></i> UPGRADE NOW
+                </button>
             `;
-            
-            setTimeout(() => {
-                if (msgDiv.parentElement) {
-                    msgDiv.remove();
-                }
-            }, 5000);
         }
         
-        // === SHOW MARKET NUMBERS ===
-        function showMarketNumbers(marketId) {
-            // Hide markets grid
-            document.querySelector('.markets-section').style.display = 'none';
-            
-            // Show numbers display
-            document.getElementById('numbers-display').style.display = 'block';
-            
-            // Find market data
-            const market = markets.find(m => m.id === marketId);
-            const numbers = manualNumbers[marketId] || { singles: [1,2,3,4], doubles: [10,20,30,40] };
-            
-            // Update title and time
-            document.getElementById('market-title').textContent = `${market.name} Market`;
-            document.getElementById('market-time').textContent = `Update Time: ${market.time} Daily`;
-            
-            // Check if premium access required
-            const isPremiumRequired = market.premium && (!currentUser || !currentUser.isPremium);
-            
-            if (isPremiumRequired) {
-                // Show login required message
-                document.getElementById('numbers-login-required').style.display = 'block';
-                document.getElementById('numbers-display-content').style.display = 'none';
-            } else {
-                // Show numbers
-                document.getElementById('numbers-login-required').style.display = 'none';
-                document.getElementById('numbers-display-content').style.display = 'block';
-                
-                // Load single numbers
-                const singleGrid = document.getElementById('single-numbers');
-                singleGrid.innerHTML = numbers.singles.map(num => `
-                    <div class="number-box single-box">${num}</div>
-                `).join('');
-                
-                // Load double numbers
-                const doubleGrid = document.getElementById('double-numbers');
-                doubleGrid.innerHTML = numbers.doubles.map(num => `
-                    <div class="number-box double-box">${num}</div>
-                `).join('');
-            }
-            
-            window.scrollTo(0, 0);
+        // Reload markets
+        loadMarkets();
+    }
+    
+    function updateUIForLoggedOut() {
+        document.getElementById('logged-out-view').style.display = 'block';
+        document.getElementById('logged-in-view').style.display = 'none';
+        document.getElementById('premium-banner').style.display = 'block';
+        loadMarkets();
+    }
+    
+    function performLogin() {
+        const username = document.getElementById('login-username').value.trim();
+        const password = document.getElementById('login-password').value;
+        
+        // Validation
+        if (!username || !password) {
+            showAuthMessage('Please enter username and password', 'error');
+            return;
         }
         
-        // === SHOW MARKETS (Back Button) ===
-        function showMarkets() {
-            document.querySelector('.markets-section').style.display = 'block';
-            document.getElementById('numbers-display').style.display = 'none';
-            window.scrollTo(0, 0);
-        }
+        // Get users
+        const users = getUsers();
         
-        // === MARKET STATUS FUNCTIONS ===
-        function getMarketStatus(marketTimeStr) {
-            const now = new Date();
-            const currentHours = now.getHours();
-            const currentMinutes = now.getMinutes();
-            const currentTotalMinutes = currentHours * 60 + currentMinutes;
-            
-            const [time, modifier] = marketTimeStr.split(' ');
-            let [hours, minutes] = time.split(':').map(Number);
-            
-            if (modifier === 'PM' && hours !== 12) hours += 12;
-            if (modifier === 'AM' && hours === 12) hours = 0;
-            
-            const marketTotalMinutes = hours * 60 + minutes;
-            const diff = marketTotalMinutes - currentTotalMinutes;
-            
-            if (Math.abs(diff) <= 30) return 'open';
-            if (diff > 30) return 'upcoming';
-            return 'closed';
-        }
-        
-        function updateMarketStatus() {
-            const marketCards = document.querySelectorAll('.market-card');
-            marketCards.forEach((card, index) => {
-                const market = markets[index];
-                if (market) {
-                    const status = getMarketStatus(market.time);
-                    const statusSpan = card.querySelector('.status');
-                    
-                    statusSpan.className = `status ${status}`;
-                    statusSpan.textContent = status.toUpperCase();
-                }
-            });
-        }
-        
-        // === DATE & TIME ===
-        function updateDateTime() {
-            const now = new Date();
-            const options = { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
+        // Check credentials
+        if (users[username] && users[username].password === password) {
+            // Success
+            currentUser = {
+                username: username,
+                name: users[username].name,
+                email: users[username].email,
+                isPremium: users[username].isPremium
             };
             
-            const dateString = now.toLocaleDateString('en-IN', options);
-            const timeString = now.toLocaleTimeString('en-IN', {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: true
-            });
+            // Save to localStorage
+            localStorage.setItem('current_user', JSON.stringify(currentUser));
             
-            document.getElementById('current-date').textContent = dateString;
-            document.getElementById('current-time').textContent = timeString;
+            showAuthMessage('Login successful! Redirecting...', 'success');
+            
+            // Close modal and update UI
+            setTimeout(() => {
+                closeLoginModal();
+                updateUIForLoggedIn();
+            }, 1000);
+            
+        } else {
+            showAuthMessage('Invalid username or password', 'error');
+        }
+    }
+    
+    function performSignup() {
+        const name = document.getElementById('signup-name').value.trim();
+        const username = document.getElementById('signup-username').value.trim();
+        const password = document.getElementById('signup-password').value;
+        const confirm = document.getElementById('signup-confirm').value;
+        
+        // Validation
+        if (!name || !username || !password) {
+            showAuthMessage('Please fill all required fields', 'error');
+            return;
         }
         
-        // === CONTACT FUNCTIONS ===
-        function showContactInfo() {
-            document.getElementById('contact-modal').style.display = 'flex';
+        if (password.length < 6) {
+            showAuthMessage('Password must be at least 6 characters', 'error');
+            return;
         }
         
-        function hideContactInfo() {
-            document.getElementById('contact-modal').style.display = 'none';
+        if (password !== confirm) {
+            showAuthMessage('Passwords do not match', 'error');
+            return;
         }
         
-        // === COPY NUMBER ===
-        function copyNumber() {
+        // Check if username exists
+        const users = getUsers();
+        if (users[username]) {
+            showAuthMessage('Username already exists', 'error');
+            return;
+        }
+        
+        // Create new user
+        const newUser = {
+            name: name,
+            password: password,
+            email: '',
+            isPremium: false,
+            createdAt: new Date().toISOString()
+        };
+        
+        // Save user
+        users[username] = newUser;
+        saveUsers(users);
+        
+        // Auto login
+        currentUser = {
+            username: username,
+            name: name,
+            email: '',
+            isPremium: false
+        };
+        
+        localStorage.setItem('current_user', JSON.stringify(currentUser));
+        
+        showAuthMessage('Account created successfully! Welcome!', 'success');
+        
+        setTimeout(() => {
+            closeLoginModal();
+            updateUIForLoggedIn();
+        }, 1500);
+    }
+    
+    function logout() {
+        localStorage.removeItem('current_user');
+        currentUser = null;
+        updateUIForLoggedOut();
+        goBackToMarkets();
+        showToast('Logged out successfully', 'info');
+    }
+    // ============================================
+// UI FUNCTIONS
+// ============================================
+
+function showLoginModal() {
+    document.getElementById('login-modal').style.display = 'flex';
+    switchAuthTab('login');
+}
+
+function closeLoginModal() {
+    document.getElementById('login-modal').style.display = 'none';
+    clearAuthForms();
+}
+
+function switchAuthTab(tab) {
+    if (tab === 'login') {
+        document.getElementById('login-form-container').style.display = 'block';
+        document.getElementById('signup-form-container').style.display = 'none';
+        document.getElementById('login-tab').style.background = '#dc2626';
+        document.getElementById('login-tab').style.color = 'white';
+        document.getElementById('signup-tab').style.background = '#334155';
+        document.getElementById('signup-tab').style.color = '#94a3b8';
+    } else {
+        document.getElementById('login-form-container').style.display = 'none';
+        document.getElementById('signup-form-container').style.display = 'block';
+        document.getElementById('signup-tab').style.background = '#dc2626';
+        document.getElementById('signup-tab').style.color = 'white';
+        document.getElementById('login-tab').style.background = '#334155';
+        document.getElementById('login-tab').style.color = '#94a3b8';
+    }
+    clearAuthMessage();
+}
+
+function showAuthMessage(message, type) {
+    const msgDiv = document.getElementById('auth-message');
+    msgDiv.textContent = message;
+    msgDiv.style.display = 'block';
+    
+    if (type === 'success') {
+        msgDiv.style.background = 'rgba(34, 197, 94, 0.2)';
+        msgDiv.style.color = '#86efac';
+        msgDiv.style.border = '1px solid #86efac';
+    } else {
+        msgDiv.style.background = 'rgba(239, 68, 68, 0.2)';
+        msgDiv.style.color = '#fca5a5';
+        msgDiv.style.border = '1px solid #fca5a5';
+    }
+}
+
+function clearAuthMessage() {
+    document.getElementById('auth-message').style.display = 'none';
+}
+
+function clearAuthForms() {
+    document.getElementById('login-username').value = '';
+    document.getElementById('login-password').value = '';
+    document.getElementById('signup-name').value = '';
+    document.getElementById('signup-username').value = '';
+    document.getElementById('signup-password').value = '';
+    document.getElementById('signup-confirm').value = '';
+    clearAuthMessage();
+}
+
+function showToast(message, type = 'info') {
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.textContent = message;
+    toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#10b981' : type === 'error' ? '#dc2626' : '#3b82f6'};
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        z-index: 10000;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        animation: slideIn 0.3s ease;
+    `;
+    
+    document.body.appendChild(toast);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => {
+            if (toast.parentNode) {
+                document.body.removeChild(toast);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// ============================================
+// MARKET FUNCTIONS
+// ============================================
+
+function loadMarkets() {
+    const grid = document.getElementById('markets-grid');
+    let html = '';
+    
+    markets.forEach(market => {
+        const status = getMarketStatus(market.time);
+        const isLocked = market.premium && (!currentUser || !currentUser.isPremium);
+        
+        html += `
+            <div class="market-card ${isLocked ? 'locked' : ''}" 
+                 onclick="${isLocked ? 'showLockedMarket()' : `showMarket('${market.id}')`}">
+                <div class="market-header">
+                    <h3>${market.name} ${isLocked ? '🔒' : ''}</h3>
+                    <span class="time-badge">${market.time}</span>
+                </div>
+                <div class="market-status">
+                    <span class="status ${status}">${status.toUpperCase()}</span>
+                    <p class="market-desc">
+                        ${market.type} Market
+                        ${isLocked ? '• Premium Access Required' : ''}
+                    </p>
+                </div>
+            </div>
+        `;
+    });
+    
+    grid.innerHTML = html;
+}
+
+function showMarket(marketId) {
+    // Hide markets section
+    document.querySelector('.markets-section').style.display = 'none';
+    
+    // Show numbers display
+    document.getElementById('numbers-display').style.display = 'block';
+    
+    // Get market data
+    const market = markets.find(m => m.id === marketId);
+    const numbers = marketNumbers[marketId] || { singles: [1,2,3,4], doubles: [10,20,30,40] };
+    
+    // Update display
+    document.getElementById('market-title').textContent = `${market.name} Market`;
+    document.getElementById('market-time').textContent = `Update Time: ${market.time} Daily`;
+    
+    // Check if premium required
+    const requiresLogin = market.premium && (!currentUser || !currentUser.isPremium);
+    
+    if (requiresLogin) {
+        document.getElementById('login-required-message').style.display = 'block';
+        document.getElementById('numbers-content').style.display = 'none';
+    } else {
+        document.getElementById('login-required-message').style.display = 'none';
+        document.getElementById('numbers-content').style.display = 'block';
+        
+        // Load numbers
+        const singlesHtml = numbers.singles.map(num => `
+            <div class="number-box single-box">${num}</div>
+        `).join('');
+        
+        const doublesHtml = numbers.doubles.map(num => `
+            <div class="number-box double-box">${num}</div>
+        `).join('');
+        
+        document.getElementById('single-numbers').innerHTML = singlesHtml;
+        document.getElementById('double-numbers').innerHTML = doublesHtml;
+    }
+    
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showLockedMarket() {
+    showToast('This market requires premium access. Please login or upgrade.', 'error');
+    showLoginModal();
+}
+
+function goBackToMarkets() {
+    document.querySelector('.markets-section').style.display = 'block';
+    document.getElementById('numbers-display').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================================
+// UTILITY FUNCTIONS
+// ============================================
+
+function updateDateTime() {
+    const now = new Date();
+    const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    };
+    
+    const dateString = now.toLocaleDateString('en-IN', options);
+    const timeString = now.toLocaleTimeString('en-IN', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+    });
+    
+    document.getElementById('current-date').textContent = dateString;
+    document.getElementById('current-time').textContent = timeString;
+}
+
+function getMarketStatus(marketTimeStr) {
+    const now = new Date();
+    const currentHours = now.getHours();
+    const currentMinutes = now.getMinutes();
+    const currentTotalMinutes = currentHours * 60 + currentMinutes;
+    
+    // Parse time
+    const [time, modifier] = marketTimeStr.split(' ');
+    let [hours, minutes] = time.split(':').map(Number);
+    
+    // Convert to 24-hour format
+    if (modifier === 'PM' && hours !== 12) hours += 12;
+    if (modifier === 'AM' && hours === 12) hours = 0;
+    
+    const marketTotalMinutes = hours * 60 + minutes;
+    const diff = marketTotalMinutes - currentTotalMinutes;
+    
+    // Determine status
+    if (Math.abs(diff) <= 30) return 'open';
+    if (diff > 30) return 'upcoming';
+    return 'closed';
+}
+
+function updateMarketStatus() {
+    const marketCards = document.querySelectorAll('.market-card');
+    marketCards.forEach((card, index) => {
+        const market = markets[index];
+        if (market) {
+            const status = getMarketStatus(market.time);
+            const statusSpan = card.querySelector('.status');
+            if (statusSpan) {
+                statusSpan.className = `status ${status}`;
+                statusSpan.textContent = status.toUpperCase();
+            }
+        }
+    });
+    }
+            // ============================================
+        // UPGRADE FUNCTIONALITY
+        // ============================================
+        
+        function showUpgradeModal() {
+            const modal = document.createElement('div');
+            modal.id = 'upgrade-modal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.9);
+                z-index: 1001;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            `;
+            
+            modal.innerHTML = `
+                <div style="
+                    background: #1e293b;
+                    border-radius: 15px;
+                    padding: 40px;
+                    max-width: 500px;
+                    width: 90%;
+                    border: 2px solid #fbbf24;
+                ">
+                    <h2 style="color: #fbbf24; text-align: center; margin-bottom: 20px;">
+                        <i class="fas fa-crown"></i> UPGRADE TO PREMIUM
+                    </h2>
+                    
+                    <div style="
+                        background: rgba(251,191,36,0.1);
+                        border-radius: 10px;
+                        padding: 20px;
+                        margin: 20px 0;
+                    ">
+                        <h3 style="color: #fbbf24; margin-bottom: 15px;">
+                            Premium Benefits:
+                        </h3>
+                        <ul style="color: #cbd5e1; padding-left: 20px;">
+                            <li>Access to all 6 markets</li>
+                            <li>Premium predictions</li>
+                            <li>Priority support</li>
+                            <li>Daily updates</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="text-align: center; margin: 25px 0;">
+                        <div style="font-size: 48px; color: #fbbf24; font-weight: bold;">
+                            ₹299<span style="font-size: 24px; color: #94a3b8;">/month</span>
+                        </div>
+                        <p style="color: #94a3b8; margin-top: 10px;">
+                            Contact for premium subscription
+                        </p>
+                    </div>
+                    
+                    <div style="display: flex; gap: 15px; margin-top: 30px;">
+                        <button onclick="contactForPremium()" style="
+                            flex: 1;
+                            background: linear-gradient(90deg, #10b981, #059669);
+                            color: white;
+                            padding: 15px;
+                            border: none;
+                            border-radius: 8px;
+                            font-size: 16px;
+                            font-weight: bold;
+                            cursor: pointer;
+                        ">
+                            <i class="fas fa-phone"></i> Contact Now
+                        </button>
+                        
+                        <button onclick="closeUpgradeModal()" style="
+                            flex: 1;
+                            background: #475569;
+                            color: white;
+                            padding: 15px;
+                            border: none;
+                            border-radius: 8px;
+                            font-size: 16px;
+                            cursor: pointer;
+                        ">
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+        
+        function closeUpgradeModal() {
+            const modal = document.getElementById('upgrade-modal');
+            if (modal) {
+                document.body.removeChild(modal);
+            }
+        }
+        
+        function contactForPremium() {
             const number = "7353547650";
-            navigator.clipboard.writeText(number).then(() => {
-                alert("Number copied to clipboard: " + number);
-            });
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(number).then(() => {
+                    showToast('Number copied to clipboard: ' + number, 'success');
+                });
+            } else {
+                prompt('Copy this number:', number);
+            }
+            closeUpgradeModal();
         }
         
-        // === DEMO CREDENTIALS ===
-        /*
-        Demo Login Credentials:
+        // ============================================
+        // CONTACT FUNCTIONS
+        // ============================================
         
-        1. Premium Account:
+        function showContactInfo() {
+            const modal = document.createElement('div');
+            modal.id = 'contact-modal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.9);
+                z-index: 1001;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            `;
+            
+            modal.innerHTML = `
+                <div style="
+                    background: #1e293b;
+                    border-radius: 15px;
+                    padding: 40px;
+                    max-width: 500px;
+                    width: 90%;
+                    border: 2px solid #dc2626;
+                ">
+                    <h2 style="color: #fbbf24; text-align: center; margin-bottom: 25px;">
+                        <i class="fas fa-headset"></i> CONTACT INFORMATION
+                    </h2>
+                    
+                    <div style="margin: 20px 0;">
+                        <div style="color: #94a3b8; margin-bottom: 5px;">WhatsApp / Call:</div>
+                        <div style="color: white; font-size: 24px; font-weight: bold;">
+                            +91 73535 47650
+                        </div>
+                    </div>
+                    
+                    <div style="margin: 25px 0;">
+                        <h3 style="color: #60a5fa; margin-bottom: 10px;">
+                            <i class="fas fa-clock"></i> Available Hours:
+                        </h3>
+                        <ul style="color: #cbd5e1; padding-left: 20px;">
+                            <li>Morning: 9:00 AM - 12:00 PM</li>
+                            <li>Afternoon: 2:00 PM - 5:00 PM</li>
+                            <li>Evening: 7:00 PM - 10:00 PM</li>
+                        </ul>
+                    </div>
+                    
+                    <button onclick="copyContactNumber()" style="
+                        width: 100%;
+                        background: linear-gradient(90deg, #dc2626, #b91c1c);
+                        color: white;
+                        padding: 15px;
+                        border: none;
+                        border-radius: 8px;
+                        font-size: 16px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        margin-bottom: 15px;
+                    ">
+                        <i class="fas fa-copy"></i> Copy Number
+                    </button>
+                    
+                    <button onclick="closeContactModal()" style="
+                        width: 100%;
+                        background: #475569;
+                        color: white;
+                        padding: 15px;
+                        border: none;
+                        border-radius: 8px;
+                        font-size: 16px;
+                        cursor: pointer;
+                    ">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+        
+        function closeContactModal() {
+            const modal = document.getElementById('contact-modal');
+            if (modal) {
+                document.body.removeChild(modal);
+            }
+        }
+        
+        function copyContactNumber() {
+            const number = "7353547650";
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(number).then(() => {
+                    showToast('Number copied to clipboard!', 'success');
+                });
+            } else {
+                prompt('Copy this number:', number);
+            }
+        }
+        
+        // ============================================
+        // DEMO LOGIN CREDENTIALS
+        // ============================================
+        /*
+        DEMO ACCOUNTS:
+        
+        1. PREMIUM ACCOUNT:
            Username: admin
            Password: admin123
-        
-        2. Free Account:
-           Username: user1
-           Password: user123
+           
+        2. FREE ACCOUNT:
+           Username: demo
+           Password: demo123
+           
+        You can also create new accounts by signing up.
         */
     </script>
+
+    <style>
+        /* ANIMATIONS */
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .markets-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .user-section {
+                justify-content: center;
+            }
+            
+            .market-card.locked::after {
+                right: -25px;
+                font-size: 10px;
+                padding: 2px 25px;
+            }
+        }
+        
+        /* SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #dc2626;
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b91c1c;
+        }
+    </style>
 </body>
 </html>
