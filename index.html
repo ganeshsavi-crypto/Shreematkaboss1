@@ -6,19 +6,72 @@
     <title>Shree Matka Boss - Daily Updates</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Add ALL CSS styles from style.css here */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #f1f5f9; line-height: 1.6; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        /* Add all other CSS styles here... */
-        
-        /* Add this new style for market content */
-        .market-content { display: none; }
-        .market-content.active { display: block; }
+        /* RESET & BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f1f5f9;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(90deg, #dc2626 0%, #b91c1c 100%);
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo .tagline {
+            color: #fecaca;
+            font-size: 0.9rem;
+        }
+
+        .date-display {
+            text-align: right;
+            font-size: 1rem;
+        }
+
+        /* DISCLAIMER BANNER */
+        .disclaimer-banner {
+            background: #fbbf24;
+            color: #78350f;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 0.85rem;
+            border-bottom: 2px solid #d97706;
+        }
     </style>
 </head>
 <body>
-    <!-- Header -->
+    <!-- HEADER -->
     <header class="header">
         <div class="container">
             <div class="logo">
@@ -27,185 +80,718 @@
             </div>
             <div class="date-display">
                 <p id="current-date"></p>
+                <p id="current-time"></p>
             </div>
         </div>
     </header>
 
-    <!-- Navigation -->
-    <nav class="nav">
+    <!-- DISCLAIMER BANNER -->
+    <div class="disclaimer-banner">
         <div class="container">
-            <button onclick="showHome()" class="nav-btn active"><i class="fas fa-home"></i> Home</button>
-            <button onclick="showMarket('sridevi')" class="nav-btn"><i class="fas fa-sun"></i> Sridevi</button>
-            <button onclick="showMarket('milan')" class="nav-btn"><i class="fas fa-clock"></i> Milan</button>
-            <button onclick="showMarket('kalyan')" class="nav-btn"><i class="fas fa-chart-line"></i> Kalyan</button>
-            <button onclick="showMarket('srideviNight')" class="nav-btn"><i class="fas fa-moon"></i> S. Night</button>
-            <button onclick="showMarket('milanNight')" class="nav-btn"><i class="fas fa-star"></i> M. Night</button>
-            <button onclick="showMarket('mainBazar')" class="nav-btn"><i class="fas fa-bazaar"></i> Main Bazar</button>
-            <button onclick="showContact()" class="nav-btn"><i class="fas fa-phone"></i> Contact</button>
+            <p><i class="fas fa-exclamation-triangle"></i> <strong>DISCLAIMER:</strong> This site is for entertainment purposes only. Gambling is illegal in India. 18+ only.</p>
         </div>
-    </nav>
+    </div>
+    <!-- MAIN HOME PAGE -->
+<div id="home-page" class="container">
+    <!-- Date Section -->
+    <section class="date-section">
+        <h2><i class="far fa-calendar-alt"></i> Today's Date</h2>
+        <div class="date-card">
+            <h3 id="full-date">Loading...</h3>
+            <p class="day-time" id="day-time"></p>
+        </div>
+    </section>
 
-    <!-- Main Content Area -->
-    <main class="container" id="content-area">
-        <!-- Home Content (Default) -->
-        <div id="home-content" class="market-content active">
-            <!-- Your original home page content here -->
-            <section class="date-section">
-                <h2><i class="far fa-calendar-alt"></i> Today's Date</h2>
-                <div class="date-card">
-                    <h3 id="full-date">Loading...</h3>
-                    <p class="day-time" id="day-time"></p>
-                </div>
-            </section>
+    <!-- Markets Section -->
+    <section class="markets-section">
+        <h2><i class="fas fa-chart-line"></i> Today's Market Timings</h2>
+        <p class="section-subtitle">Click on any market to view today's predictions</p>
+        
+        <div class="markets-grid" id="markets-grid">
+            <!-- Market cards will be loaded by JavaScript -->
+        </div>
+    </section>
 
-            <section class="markets-section">
-                <h2><i class="fas fa-chart-line"></i> Today's Market Timings</h2>
-                <div class="markets-grid">
-                    <!-- Market cards will be populated by JavaScript -->
-                </div>
-            </section>
-
-            <section class="contact-section">
-                <div class="contact-card">
-                    <h3><i class="fas fa-phone-alt"></i> Contact For Premium Tips</h3>
-                    <p>For single open and single jodi fix game predictions</p>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <i class="fas fa-mobile-alt"></i>
-                            <div>
-                                <p class="contact-label">Mobile Number</p>
-                                <p class="contact-value">+91 73535 47650</p>
-                            </div>
-                        </div>
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="contact-card">
+            <h3><i class="fas fa-phone-alt"></i> Contact For Premium Tips</h3>
+            <p>For single open and single jodi fix game predictions</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-mobile-alt"></i>
+                    <div>
+                        <p class="contact-label">Mobile Number</p>
+                        <p class="contact-value">+91 73535 47650</p>
                     </div>
-                    <button onclick="showContact()" class="contact-btn">
-                        <i class="fas fa-comments"></i> Contact Now
-                    </button>
                 </div>
-            </section>
+                <div class="contact-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <p class="contact-label">Available</p>
+                        <p class="contact-value">10:00 AM - 10:00 PM</p>
+                    </div>
+                </div>
+            </div>
+            <button onclick="showContactPage()" class="contact-btn">
+                <i class="fas fa-comments"></i> Contact Now
+            </button>
         </div>
+    </section>
+</div>
+<!-- MARKET DETAILS PAGE (Hidden by default) -->
+<div id="market-page" class="market-details-page container">
+    <!-- Content loaded by JavaScript -->
+</div>
 
-        <!-- Market Content (Hidden by default) -->
-        <div id="market-content" class="market-content">
-            <!-- Market content will be loaded here by JavaScript -->
-        </div>
+<!-- CONTACT PAGE (Hidden by default) -->
+<div id="contact-page" class="contact-page container">
+    <!-- Content loaded by JavaScript -->
+</div>
 
-        <!-- Contact Content (Hidden by default) -->
-        <div id="contact-content" class="market-content">
-            <!-- Contact content will be loaded here -->
-        </div>
-    </main>
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2024 Shree Matka Boss. All rights reserved.</p>
+        <p class="footer-disclaimer">This website is for entertainment purposes only. We do not promote gambling. Numbers are randomly generated for fun.</p>
+        <p style="color: #64748b; font-size: 0.85rem; margin-top: 1rem;">
+            <i class="fas fa-shield-alt"></i> Stay safe | <i class="fas fa-heart"></i> Play responsibly
+        </p>
+    </div>
+</footer>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 Shree Matka Boss. All rights reserved.</p>
-            <p class="footer-disclaimer">This website is for entertainment purposes only. We do not promote gambling.</p>
-        </div>
-    </footer>
+<style>
+    /* DATE SECTION */
+    .date-section {
+        margin: 2rem 0;
+        text-align: center;
+    }
+
+    .date-section h2 {
+        color: #60a5fa;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .date-card {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        padding: 1.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .date-card h3 {
+        font-size: 1.8rem;
+        color: #60a5fa;
+        margin-bottom: 0.5rem;
+    }
+
+    .day-time {
+        color: #94a3b8;
+        font-size: 1.1rem;
+    }
+
+    /* MARKETS SECTION */
+    .markets-section {
+        margin: 3rem 0;
+    }
+
+    .markets-section h2 {
+        color: #f1f5f9;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .section-subtitle {
+        color: #94a3b8;
+        margin-bottom: 2rem;
+    }
+</style>
+<style>
+    .markets-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .market-card {
+        background: rgba(30, 41, 59, 0.7);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        cursor: pointer;
+    }
+
+    .market-card:hover {
+        transform: translateY(-5px);
+        background: rgba(30, 41, 59, 0.9);
+        border-color: #dc2626;
+    }
+
+    .market-card.morning { border-left: 4px solid #f59e0b; }
+    .market-card.afternoon { border-left: 4px solid #10b981; }
+    .market-card.evening { border-left: 4px solid #8b5cf6; }
+    .market-card.night { border-left: 4px solid #1d4ed8; }
+
+    .market-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .market-header h3 {
+        font-size: 1.3rem;
+        color: #f1f5f9;
+    }
+
+    .time-badge {
+        background: rgba(220, 38, 38, 0.2);
+        color: #fca5a5;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .market-status {
+        margin-top: auto;
+    }
+
+    .status {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .status.open {
+        background: rgba(34, 197, 94, 0.2);
+        color: #86efac;
+    }
+
+    .status.upcoming {
+        background: rgba(249, 115, 22, 0.2);
+        color: #fdba74;
+    }
+
+    .status.closed {
+        background: rgba(239, 68, 68, 0.2);
+        color: #fca5a5;
+    }
+
+    .market-desc {
+        color: #94a3b8;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+    }
+
+    .market-card .fa-arrow-right {
+        position: absolute;
+        right: 1.5rem;
+        bottom: 1.5rem;
+        color: #64748b;
+    }
+
+    /* CONTACT SECTION */
+    .contact-section {
+        margin: 3rem 0;
+    }
+
+    .contact-card {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        border-radius: 15px;
+        padding: 2rem;
+        text-align: center;
+        border: 1px solid rgba(220, 38, 38, 0.3);
+    }
+
+    .contact-card h3 {
+        color: #f1f5f9;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+</style>
+<style>
+    .contact-info {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin: 2rem 0;
+        flex-wrap: wrap;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-align: left;
+    }
+
+    .contact-item i {
+        font-size: 1.5rem;
+        color: #dc2626;
+    }
+
+    .contact-label {
+        color: #94a3b8;
+        font-size: 0.9rem;
+    }
+
+    .contact-value {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #f1f5f9;
+    }
+
+    .contact-btn {
+        display: inline-block;
+        background: linear-gradient(90deg, #dc2626 0%, #b91c1c 100%);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        margin-top: 1rem;
+    }
+
+    .contact-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+    }
+
+    /* FOOTER */
+    .footer {
+        background: rgba(15, 23, 42, 0.9);
+        padding: 2rem 0;
+        text-align: center;
+        margin-top: 3rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-disclaimer {
+        color: #94a3b8;
+        font-size: 0.9rem;
+        margin: 1rem 0;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* MARKET DETAILS PAGE STYLES */
+    .market-details-page {
+        display: none;
+    }
+
+    .market-details-page.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #60a5fa;
+        text-decoration: none;
+        margin-bottom: 1.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.05);
+        transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+</style>
+    <style>
+        .market-details {
+            margin-top: 1rem;
+        }
+
+        .numbers-container {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .number-section {
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 12px;
+            padding: 1.5rem;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .number-section h3 {
+            color: #f1f5f9;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .number-box {
+            background: rgba(220, 38, 38, 0.1);
+            border: 2px solid #dc2626;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fca5a5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+        }
+
+        .double-box {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: #3b82f6;
+            color: #93c5fd;
+        }
+
+        .market-info {
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .update-time {
+            color: #fbbf24;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin: 0.5rem 0;
+        }
+
+        /* CONTACT PAGE STYLES */
+        .contact-page {
+            display: none;
+        }
+
+        .contact-page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .contact-method {
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            color: #dc2626;
+            margin-bottom: 1rem;
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-btn:hover {
+            background: #128C7E;
+            transform: scale(1.05);
+        }
+
+        .call-btn {
+            background: #dc2626;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .call-btn:hover {
+            background: #b91c1c;
+            transform: scale(1.05);
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .markets-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header .container {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .date-display {
+                text-align: center;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .numbers-container {
+                flex-direction: column;
+            }
+            
+            .number-section {
+                width: 100%;
+            }
+            
+            .market-card .fa-arrow-right {
+                display: none;
+            }
+        }
+    </style>
 
     <script>
-        // All JavaScript code in one file
+        // ====================
+        // GLOBAL VARIABLES
+        // ====================
+        let currentPage = 'home';
+        let marketsData = [
+            { id: 'sridevi', name: 'Sridevi', time: '10:00 AM', type: 'morning' },
+            { id: 'milan', name: 'Milan Day', time: '1:30 PM', type: 'afternoon' },
+            { id: 'kalyan', name: 'Kalyan', time: '2:00 PM', type: 'afternoon' },
+            { id: 'sridevi-night', name: 'Sridevi Night', time: '6:30 PM', type: 'evening' },
+            { id: 'milan-night', name: 'Milan Night', time: '8:00 PM', type: 'evening' },
+            { id: 'main-bazar', name: 'Main Bazar', time: '8:30 PM', type: 'night' }
+        ];
+
+        // ====================
+        // INITIALIZATION
+        // ====================
         document.addEventListener('DOMContentLoaded', function() {
             updateDateTime();
             loadMarketCards();
+            updateMarketStatuses();
+            
+            // Set interval to update time
+            setInterval(updateDateTime, 1000);
+            setInterval(updateMarketStatuses, 60000);
         });
 
-        function showHome() {
-            document.getElementById('home-content').classList.add('active');
-            document.getElementById('market-content').classList.remove('active');
-            document.getElementById('contact-content').classList.remove('active');
-            updateNavButtons('home');
-        }
-
-        function showMarket(marketName) {
-            document.getElementById('home-content').classList.remove('active');
-            document.getElementById('market-content').classList.add('active');
-            document.getElementById('contact-content').classList.remove('active');
-            
-            // Load market data
-            loadMarketData(marketName);
-            updateNavButtons(marketName);
-        }
-
-        function showContact() {
-            document.getElementById('home-content').classList.remove('active');
-            document.getElementById('market-content').classList.remove('active');
-            document.getElementById('contact-content').classList.add('active');
-            
-            // Load contact content
-            loadContactContent();
-            updateNavButtons('contact');
-        }
-
-        function loadMarketCards() {
-            const markets = [
-                { name: 'Sridevi', time: '10:00 AM', type: 'morning' },
-                { name: 'Milan Day', time: '1:30 PM', type: 'afternoon' },
-                { name: 'Kalyan', time: '2:00 PM', type: 'afternoon' },
-                { name: 'Sridevi Night', time: '6:30 PM', type: 'evening' },
-                { name: 'Milan Night', time: '8:00 PM', type: 'evening' },
-                { name: 'Main Bazar', time: '8:30 PM', type: 'night' }
-            ];
-
-            const grid = document.querySelector('.markets-grid');
-            grid.innerHTML = markets.map(market => `
-                <div class="market-card ${market.type}" onclick="showMarket('${market.name.toLowerCase().replace(' ', '')}')">
-                    <div class="market-header">
-                        <h3>${market.name}</h3>
-                        <span class="time-badge">${market.time}</span>
-                    </div>
-                    <div class="market-status">
-                        <span class="status open">OPEN</span>
-                        <p class="market-desc">${market.type} Market</p>
-                    </div>
-                    <i class="fas fa-arrow-right"></i>
-                </div>
-            `).join('');
-        }
-
-        function loadMarketData(marketName) {
-            const marketContent = document.getElementById('market-content');
-            
-            // Generate random numbers
-            const singles = generateUniqueNumbers(4, 1, 9);
-            const doubles = generateUniqueNumbers(4, 10, 99);
-            
-            // Market timing data
-            const marketTimes = {
-                sridevi: '10:00 AM',
-                milanday: '1:30 PM',
-                kalyan: '2:00 PM',
-                sridevinight: '6:30 PM',
-                milannight: '8:00 PM',
-                mainbazar: '8:30 PM'
+        // ====================
+        // DATE & TIME FUNCTIONS
+        // ====================
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
             };
+            const dateString = now.toLocaleDateString('en-IN', options);
+            const timeString = now.toLocaleTimeString('en-IN', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            });
+            
+            document.getElementById('current-date').textContent = dateString;
+            document.getElementById('current-time').textContent = timeString;
+            document.getElementById('full-date').textContent = dateString;
+            
+            const dayTime = `${now.toLocaleDateString('en-IN', { weekday: 'long' })} • ${timeString}`;
+            document.getElementById('day-time').textContent = dayTime;
+        }
 
-            marketContent.innerHTML = `
+        // ====================
+        // MARKET STATUS FUNCTIONS
+        // ====================
+        function updateMarketStatuses() {
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+            
+            marketsData.forEach(market => {
+                const marketTime = convertTimeToMinutes(market.time);
+                const status = getMarketStatus(currentTime, marketTime);
+                
+                market.status = status;
+            });
+            
+            if (currentPage === 'home') {
+                loadMarketCards();
+            }
+        }
+
+        function convertTimeToMinutes(timeStr) {
+            const [time, modifier] = timeStr.split(' ');
+            let [hours, minutes] = time.split(':').map(Number);
+            
+            if (modifier === 'PM' && hours !== 12) hours += 12;
+            if (modifier === 'AM' && hours === 12) hours = 0;
+            
+            return hours * 60 + minutes;
+        }
+
+        function getMarketStatus(currentTime, marketTime) {
+            const diff = marketTime - currentTime;
+            
+            if (diff > 30) return 'upcoming';
+            if (diff >= -30 && diff <= 30) return 'open';
+            return 'closed';
+        }
+
+        // ====================
+        // PAGE NAVIGATION
+        // ====================
+        function showHomePage() {
+            currentPage = 'home';
+            document.getElementById('home-page').style.display = 'block';
+            document.getElementById('market-page').classList.remove('active');
+            document.getElementById('contact-page').classList.remove('active');
+            updateDateTime();
+        }
+
+        function showMarketPage(marketId) {
+            currentPage = 'market';
+            document.getElementById('home-page').style.display = 'none';
+            document.getElementById('market-page').classList.add('active');
+            document.getElementById('contact-page').classList.remove('active');
+            
+            loadMarketDetails(marketId);
+        }
+
+        function showContactPage() {
+            currentPage = 'contact';
+            document.getElementById('home-page').style.display = 'none';
+            document.getElementById('market-page').classList.remove('active');
+            document.getElementById('contact-page').classList.add('active');
+            
+            loadContactPage();
+        }
+
+        // ====================
+        // LOAD MARKET CARDS
+        // ====================
+        function loadMarketCards() {
+            const grid = document.getElementById('markets-grid');
+            
+            const marketCardsHTML = marketsData.map(market => {
+                const status = market.status || 'upcoming';
+                const statusClass = status;
+                const statusText = status.toUpperCase();
+                
+                return `
+                    <div class="market-card ${market.type}" onclick="showMarketPage('${market.id}')">
+                        <div class="market-header">
+                            <h3>${market.name}</h3>
+                            <span class="time-badge">${market.time}</span>
+                        </div>
+                        <div class="market-status">
+                            <span class="status ${statusClass}">${statusText}</span>
+                            <p class="market-desc">${market.type.charAt(0).toUpperCase() + market.type.slice(1)} Market</p>
+                        </div>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                `;
+            }).join('');
+            
+            grid.innerHTML = marketCardsHTML;
+        }
+
+        // ====================
+        // LOAD MARKET DETAILS
+        // ====================
+        function loadMarketDetails(marketId) {
+            const market = marketsData.find(m => m.id === marketId);
+            if (!market) return;
+            
+            const singleNumbers = generateUniqueNumbers(4, 1, 9);
+            const doubleNumbers = generateUniqueNumbers(4, 10, 99);
+            
+            const marketPage = document.getElementById('market-page');
+            marketPage.innerHTML = `
+                <a href="javascript:void(0)" onclick="showHomePage()" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Markets
+                </a>
+                
                 <div class="market-details">
-                    <a href="javascript:void(0)" onclick="showHome()" class="back-btn">
-                        <i class="fas fa-arrow-left"></i> Back to Markets
-                    </a>
-                    
                     <div class="market-info">
-                        <h2><i class="fas fa-chart-line"></i> ${marketName.toUpperCase()} Market</h2>
-                        <p class="update-time">Update Time: ${marketTimes[marketName] || 'Daily'}</p>
-                        <p class="market-status">Status: <span class="status open">OPEN</span></p>
+                        <h2><i class="fas fa-chart-line"></i> ${market.name} Market</h2>
+                        <p class="update-time">Update Time: ${market.time} Daily</p>
+                        <p>Status: <span class="status ${market.status || 'upcoming'}">${(market.status || 'upcoming').toUpperCase()}</span></p>
                         
                         <div class="numbers-container">
                             <div class="number-section">
                                 <h3><i class="fas fa-dice-one"></i> Single Numbers (1-9)</h3>
                                 <div class="number-grid">
-                                    ${singles.map(num => `<div class="number-box">${num}</div>`).join('')}
+                                    ${singleNumbers.map(num => `<div class="number-box">${num}</div>`).join('')}
                                 </div>
                             </div>
                             
                             <div class="number-section">
                                 <h3><i class="fas fa-dice-two"></i> Double Numbers (10-99)</h3>
                                 <div class="number-grid">
-                                    ${doubles.map(num => `<div class="number-box double-box">${num}</div>`).join('')}
+                                    ${doubleNumbers.map(num => `<div class="number-box double-box">${num}</div>`).join('')}
                                 </div>
                             </div>
+                        </div>
+                        
+                        <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(251, 191, 36, 0.1); border-radius: 8px;">
+                            <p><i class="fas fa-info-circle"></i> <strong>Note:</strong> These numbers are randomly generated for entertainment purposes only.</p>
                         </div>
                     </div>
                     
@@ -229,79 +815,93 @@
             `;
         }
 
-        function loadContactContent() {
-            const contactContent = document.getElementById('contact-content');
-            
-            contactContent.innerHTML = `
-                <div class="contact-header">
+        // ====================
+        // LOAD CONTACT PAGE
+        // ====================
+        function loadContactPage() {
+            const contactPage = document.getElementById('contact-page');
+            contactPage.innerHTML = `
+                <a href="javascript:void(0)" onclick="showHomePage()" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+                
+                <div class="contact-details">
                     <h2><i class="fas fa-headset"></i> Contact Our Expert</h2>
-                    <p>Get premium single open and single jodi fix game predictions</p>
-                </div>
+                    <p style="color: #94a3b8; margin-bottom: 2rem;">Get premium single open and single jodi fix game predictions</p>
+                    
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <h3>WhatsApp</h3>
+                            <p>Chat directly with our expert for quick responses</p>
+                            <a href="https://wa.me/917353547650" class="whatsapp-btn" target="_blank">
+                                <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                            </a>
+                        </div>
 
-                <div class="contact-methods">
-                    <div class="contact-method">
-                        <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
-                        <h3>WhatsApp</h3>
-                        <p>Chat directly with our expert</p>
-                        <a href="https://wa.me/917353547650" class="whatsapp-btn" target="_blank">
-                            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
-                        </a>
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <h3>Direct Call</h3>
+                            <p>Call for detailed predictions and guidance</p>
+                            <a href="tel:+917353547650" class="call-btn">
+                                <i class="fas fa-phone"></i> Call Now
+                            </a>
+                        </div>
+
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-sms"></i>
+                            </div>
+                            <h3>SMS/Call</h3>
+                            <p>Mobile Number for SMS and Calls</p>
+                            <div style="margin-top: 1rem;">
+                                <p style="font-size: 1.5rem; font-weight: bold; color: #fca5a5;">
+                                    +91 73535 47650
+                                </p>
+                                <button onclick="copyNumber()" class="contact-btn" style="margin-top: 1rem;">
+                                    <i class="fas fa-copy"></i> Copy Number
+                                </button>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="contact-method">
-                        <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
-                        <h3>Direct Call</h3>
-                        <p>Call for detailed predictions</p>
-                        <a href="tel:+917353547650" class="call-btn">
-                            <i class="fas fa-phone"></i> Call Now
-                        </a>
+                    
+                    <div class="market-info">
+                        <h3><i class="fas fa-clock"></i> Available Hours</h3>
+                        <p>Our expert is available during these hours:</p>
+                        <ul style="margin: 1rem 0; padding-left: 2rem;">
+                            <li style="margin-bottom: 0.5rem;"><strong>Morning:</strong> 9:00 AM - 12:00 PM</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Afternoon:</strong> 2:00 PM - 5:00 PM</li>
+                            <li><strong>Evening:</strong> 7:00 PM - 10:00 PM</li>
+                        </ul>
+                        <p style="color: #94a3b8; font-size: 0.9rem;">Response time may vary based on call volume.</p>
                     </div>
-                </div>
-
-                <div class="market-info">
-                    <h3><i class="fas fa-clock"></i> Available Hours</h3>
-                    <ul>
-                        <li><strong>Morning:</strong> 9:00 AM - 12:00 PM</li>
-                        <li><strong>Afternoon:</strong> 2:00 PM - 5:00 PM</li>
-                        <li><strong>Evening:</strong> 7:00 PM - 10:00 PM</li>
-                    </ul>
                 </div>
             `;
         }
 
+        // ====================
+        // UTILITY FUNCTIONS
+        // ====================
         function generateUniqueNumbers(count, min, max) {
-            const numbers = [];
-            while(numbers.length < count) {
-                const num = Math.floor(Math.random() * (max - min + 1)) + min;
-                if(!numbers.includes(num)) numbers.push(num);
+            const numbers = new Set();
+            while (numbers.size < count) {
+                numbers.add(Math.floor(Math.random() * (max - min + 1)) + min);
             }
-            return numbers;
-        }
-
-        function updateDateTime() {
-            const now = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            const dateString = now.toLocaleDateString('en-IN', options);
-            const timeString = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
-            
-            document.getElementById('current-date').textContent = dateString;
-            document.getElementById('full-date').textContent = dateString;
-            document.getElementById('day-time').textContent = `${now.toLocaleDateString('en-IN', { weekday: 'long' })} • ${timeString}`;
-        }
-
-        function updateNavButtons(active) {
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector(`.nav-btn[onclick*="${active}"]`).classList.add('active');
+            return Array.from(numbers);
         }
 
         function copyNumber() {
-            navigator.clipboard.writeText("7353547650").then(() => {
-                alert("Number copied to clipboard: 7353547650");
+            const number = "7353547650";
+            navigator.clipboard.writeText(number).then(() => {
+                alert("Number copied to clipboard: " + number);
+            }).catch(err => {
+                alert("Please manually copy: " + number);
             });
         }
-
-        // Update time every minute
-        setInterval(updateDateTime, 60000);
     </script>
 </body>
-    </html>
+</html>
