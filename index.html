@@ -21,24 +21,78 @@
             padding: 0 15px;
         }
         
-        /* ===== HEADER ===== */
+        /* ===== HEADER WITH LOGIN ===== */
         .header {
             background: linear-gradient(90deg, #dc2626, #b91c1c);
-            padding: 20px 0;
-            text-align: center;
+            padding: 15px 0;
             border-bottom: 3px solid #fbbf24;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
         
-        .header h1 {
-            font-size: 32px;
-            margin-bottom: 8px;
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
             color: white;
         }
         
-        .header .tagline {
+        .logo .tagline {
             color: #fecaca;
-            font-size: 16px;
+            font-size: 14px;
+        }
+        
+        /* ===== LOGIN BUTTON ===== */
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .login-btn, .logout-btn {
+            background: #fbbf24;
+            color: #78350f;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover, .logout-btn:hover {
+            background: #f59e0b;
+            transform: scale(1.05);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+        
+        .username {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+        
+        /* ===== DISCLAIMER ===== */
+        .disclaimer {
+            background: #fbbf24;
+            color: #78350f;
+            padding: 12px;
+            text-align: center;
+            font-size: 14px;
+            margin: 10px 0;
+            border-radius: 8px;
         }
         
         /* ===== DATE DISPLAY ===== */
@@ -69,25 +123,37 @@
             font-size: 18px;
             margin-top: 10px;
         }
-        
-        /* ===== DISCLAIMER ===== */
-        .disclaimer {
-            background: #fbbf24;
-            color: #78350f;
-            padding: 12px;
-            text-align: center;
-            font-size: 14px;
-            margin: 10px 0;
-            border-radius: 8px;
-        }
     </style>
 </head>
 <body>
-    <!-- HEADER -->
+    <!-- HEADER WITH LOGIN -->
     <div class="header">
         <div class="container">
-            <h1><i class="fas fa-crown"></i> SHREE MATKA BOSS</h1>
-            <p class="tagline">Daily Number Updates - </p>
+            <div class="header-content">
+                <!-- Logo -->
+                <div class="logo">
+                    <h1><i class="fas fa-crown"></i> SHREE MATKA BOSS</h1>
+                    <p class="tagline">Daily Number Updates -</p>
+                </div>
+                
+                <!-- User Section (Changes based on login status) -->
+                <div class="user-section">
+                    <div id="logged-out-view">
+                        <button class="login-btn" onclick="showLoginModal()">
+                            <i class="fas fa-sign-in-alt"></i> Login / Sign Up
+                        </button>
+                    </div>
+                    <div id="logged-in-view" style="display: none;">
+                        <div class="user-info">
+                            <i class="fas fa-user-circle" style="font-size: 24px;"></i>
+                            <span class="username" id="display-username">User</span>
+                        </div>
+                        <button class="logout-btn" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -107,7 +173,243 @@
             <div id="current-time"></div>
         </div>
     </div>
-    <!-- MARKETS GRID -->
+    <!-- LOGIN/SIGNUP MODAL -->
+<div id="login-modal" style="
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+">
+    <div style="
+        background: #1e293b;
+        padding: 40px;
+        border-radius: 15px;
+        max-width: 400px;
+        width: 90%;
+        border: 2px solid #dc2626;
+    ">
+        <!-- Tabs -->
+        <div style="display: flex; margin-bottom: 30px; border-bottom: 1px solid #475569;">
+            <button id="tab-login" onclick="switchTab('login')" style="
+                flex: 1;
+                background: none;
+                color: #fbbf24;
+                border: none;
+                padding: 15px;
+                font-size: 18px;
+                font-weight: bold;
+                cursor: pointer;
+                border-bottom: 3px solid #fbbf24;
+            ">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            <button id="tab-signup" onclick="switchTab('signup')" style="
+                flex: 1;
+                background: none;
+                color: #94a3b8;
+                border: none;
+                padding: 15px;
+                font-size: 18px;
+                cursor: pointer;
+            ">
+                <i class="fas fa-user-plus"></i> Sign Up
+            </button>
+        </div>
+        
+        <!-- Login Form -->
+        <div id="login-form">
+            <h3 style="color: #f1f5f9; margin-bottom: 25px; text-align: center;">
+                Login to Your Account
+            </h3>
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; color: #94a3b8; margin-bottom: 8px;">
+                    <i class="fas fa-user"></i> Username
+                </label>
+                <input type="text" id="login-username" placeholder="Enter username" style="
+                    width: 100%;
+                    padding: 12px;
+                    border: 1px solid #475569;
+                    border-radius: 8px;
+                    background: #0f172a;
+                    color: white;
+                    font-size: 16px;
+                ">
+            </div>
+            
+            <div style="margin-bottom: 25px;">
+                <label style="display: block; color: #94a3b8; margin-bottom: 8px;">
+                    <i class="fas fa-lock"></i> Password
+                </label>
+                <input type="password" id="login-password" placeholder="Enter password" style="
+                    width: 100%;
+                    padding: 12px;
+                    border: 1px solid #475569;
+                    border-radius: 8px;
+                    background: #0f172a;
+                    color: white;
+                    font-size: 16px;
+                ">
+            </div>
+            
+            <button onclick="login()" style="
+                width: 100%;
+                background: linear-gradient(90deg, #dc2626, #b91c1c);
+                color: white;
+                padding: 14px;
+                border: none;
+                border-radius: 8px;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                margin-bottom: 15px;
+            ">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            
+            <div style="text-align: center; color: #94a3b8; font-size: 14px;">
+                Don't have account? 
+                <a href="javascript:void(0)" onclick="switchTab('signup')" style="color: #60a5fa;">
+                    Sign up here
+                </a>
+            </div>
+        </div>
+        
+        <!-- Signup Form (Hidden by default) -->
+        <div id="signup-form" style="display: none;">
+            <h3 style="color: #f1f5f9; margin-bottom: 25px; text-align: center;">
+                Create New Account
+            </h3>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; color: #94a3b8; margin-bottom: 8px;">
+                    <i class="fas fa-user"></i> Full Name
+                </label>
+                <input type="text" id="signup-name" placeholder="Enter full name" style="
+                    width: 100%;
+                    padding: 12px;
+                    border: 1px solid #475569;
+                    border-radius: 8px;
+                    background: #0f172a;
+                    color: white;
+                    font-size: 16px;
+                ">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; color: #94a3b8; margin-bottom: 8px;">
+                    <i class="fas fa-at"></i> Username
+                </label>
+                <input type="text" id="signup-username" placeholder="Choose username" style="
+                    width: 100%;
+                    padding: 12px;
+                    border: 1px solid #475569;
+                    border-radius: 8px;
+                    background: #0f172a;
+                    color: white;
+                    font-size: 16px;
+                ">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; color: #94a3b8; margin-bottom: 8px;">
+                    <i class="fas fa-envelope"></i> Email (Optional)
+                </label>
+                <input type="email" id="signup-email" placeholder="Enter email" style="
+                    width: 100%;
+                    padding: 12px;
+                    border: 1px solid #475569;
+                    border-radius: 8px;
+                    background: #0f172a;
+                    color: white;
+                    font-size: 16px;
+                ">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; color: #94a3b8; margin-bottom: 8px;">
+                    <i class="fas fa-lock"></i> Password
+                </label>
+                <input type="password" id="signup-password" placeholder="Create password" style="
+                    width: 100%;
+                    padding: 12px;
+                    border: 1px solid #475569;
+                    border-radius: 8px;
+                    background: #0f172a;
+                    color: white;
+                    font-size: 16px;
+                ">
+            </div>
+            
+            <div style="margin-bottom: 25px;">
+                <label style="display: block; color: #94a3b8; margin-bottom: 8px;">
+                    <i class="fas fa-lock"></i> Confirm Password
+                </label>
+                <input type="password" id="signup-confirm" placeholder="Confirm password" style="
+                    width: 100%;
+                    padding: 12px;
+                    border: 1px solid #475569;
+                    border-radius: 8px;
+                    background: #0f172a;
+                    color: white;
+                    font-size: 16px;
+                ">
+            </div>
+            
+            <button onclick="signup()" style="
+                width: 100%;
+                background: linear-gradient(90deg, #10b981, #059669);
+                color: white;
+                padding: 14px;
+                border: none;
+                border-radius: 8px;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                margin-bottom: 15px;
+            ">
+                <i class="fas fa-user-plus"></i> Create Account
+            </button>
+            
+            <div style="text-align: center; color: #94a3b8; font-size: 14px;">
+                Already have account? 
+                <a href="javascript:void(0)" onclick="switchTab('login')" style="color: #60a5fa;">
+                    Login here
+                </a>
+            </div>
+        </div>
+        
+        <!-- Close Button -->
+        <button onclick="hideLoginModal()" style="
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 20px;
+            cursor: pointer;
+        ">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <!-- Message Display -->
+        <div id="auth-message" style="
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+        "></div>
+    </div>
+</div>
+<!-- MARKETS GRID -->
 <div class="container">
     <div class="markets-section">
         <h2 style="text-align: center; margin: 30px 0 20px 0; color: #f1f5f9;">
@@ -116,6 +418,33 @@
         <p style="text-align: center; color: #94a3b8; margin-bottom: 30px;">
             Click on any market to view today's numbers
         </p>
+        
+        <!-- Premium Message (Shows when not logged in) -->
+        <div id="premium-message" style="
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+            color: #78350f;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 25px;
+            display: none;
+        ">
+            <h3 style="margin-bottom: 10px;">
+                <i class="fas fa-crown"></i> Premium Access Required
+            </h3>
+            <p>Login to view all market numbers and get premium predictions!</p>
+            <button onclick="showLoginModal()" style="
+                background: #78350f;
+                color: white;
+                padding: 10px 25px;
+                border: none;
+                border-radius: 20px;
+                margin-top: 10px;
+                cursor: pointer;
+            ">
+                <i class="fas fa-lock-open"></i> Login Now
+            </button>
+        </div>
         
         <div class="markets-grid" id="markets-grid">
             <!-- Market cards loaded by JavaScript -->
@@ -149,6 +478,26 @@
         transform: translateY(-5px);
         box-shadow: 0 10px 25px rgba(220, 38, 38, 0.2);
         border-color: #dc2626;
+    }
+    
+    .market-card.premium {
+        background: linear-gradient(135deg, #1e293b, #1e40af);
+        border: 2px dashed #fbbf24;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .market-card.premium::after {
+        content: "PREMIUM";
+        position: absolute;
+        top: 10px;
+        right: -30px;
+        background: #fbbf24;
+        color: #78350f;
+        padding: 3px 30px;
+        font-size: 12px;
+        font-weight: bold;
+        transform: rotate(45deg);
     }
     
     .market-header {
@@ -219,7 +568,7 @@
     .market-card[data-type="evening"] { border-left: 5px solid #8b5cf6; }
     .market-card[data-type="night"] { border-left: 5px solid #3b82f6; }
 </style>
-<!-- NUMBERS DISPLAY AREA (Hidden initially) -->
+<!-- NUMBERS DISPLAY AREA -->
 <div id="numbers-display" class="numbers-container" style="display: none;">
     <div class="container">
         <button class="back-btn" onclick="showMarkets()" style="
@@ -256,75 +605,77 @@
                 margin-bottom: 20px;
             "></p>
             
-            <div style="display: flex; gap: 30px; margin: 30px 0; flex-wrap: wrap;">
-                <!-- Single Numbers -->
-                <div style="flex: 1; min-width: 300px;">
-                    <h3 style="color: #fca5a5; margin-bottom: 15px; font-size: 20px;">
-                        <i class="fas fa-dice-one"></i> Single Numbers (1-9)
-                    </h3>
-                    <div class="numbers-grid" id="single-numbers">
-                        <!-- Single numbers will be loaded here -->
+            <!-- Login Required Message -->
+            <div id="numbers-login-required" style="
+                background: linear-gradient(90deg, #f59e0b, #d97706);
+                color: #78350f;
+                padding: 30px;
+                border-radius: 10px;
+                text-align: center;
+                margin: 20px 0;
+                display: none;
+            ">
+                <h3 style="margin-bottom: 15px; font-size: 24px;">
+                    <i class="fas fa-lock"></i> Login Required
+                </h3>
+                <p style="margin-bottom: 20px; font-size: 16px;">
+                    You need to login to view the numbers for this market.
+                </p>
+                <button onclick="showLoginModal()" style="
+                    background: #78350f;
+                    color: white;
+                    padding: 12px 30px;
+                    border: none;
+                    border-radius: 25px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    cursor: pointer;
+                ">
+                    <i class="fas fa-sign-in-alt"></i> Login Now
+                </button>
+            </div>
+            
+            <!-- Numbers Display (Shown when logged in) -->
+            <div id="numbers-display-content" style="display: none;">
+                <div style="display: flex; gap: 30px; margin: 30px 0; flex-wrap: wrap;">
+                    <!-- Single Numbers -->
+                    <div style="flex: 1; min-width: 300px;">
+                        <h3 style="color: #fca5a5; margin-bottom: 15px; font-size: 20px;">
+                            <i class="fas fa-dice-one"></i> Single Numbers (1-9)
+                        </h3>
+                        <div class="numbers-grid" id="single-numbers">
+                            <!-- Single numbers will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Double Numbers -->
+                    <div style="flex: 1; min-width: 300px;">
+                        <h3 style="color: #93c5fd; margin-bottom: 15px; font-size: 20px;">
+                            <i class="fas fa-dice-two"></i> Double Numbers (10-99)
+                        </h3>
+                        <div class="numbers-grid" id="double-numbers">
+                            <!-- Double numbers will be loaded here -->
+                        </div>
                     </div>
                 </div>
                 
-                <!-- Double Numbers -->
-                <div style="flex: 1; min-width: 300px;">
-                    <h3 style="color: #93c5fd; margin-bottom: 15px; font-size: 20px;">
-                        <i class="fas fa-dice-two"></i> Double Numbers (10-99)
-                    </h3>
-                    <div class="numbers-grid" id="double-numbers">
-                        <!-- Double numbers will be loaded here -->
-                    </div>
+                <div class="note-box" style="
+                    background: rgba(251, 191, 36, 0.1);
+                    border: 1px solid #fbbf24;
+                    padding: 15px;
+                    border-radius: 8px;
+                    margin-top: 20px;
+                    color: #fbbf24;
+                ">
+                    <p><i class="fas fa-info-circle"></i> 
+                        <strong>Note:</strong> .
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<style>
-    /* ===== NUMBERS DISPLAY STYLES ===== */
-    .numbers-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-        margin-top: 15px;
-    }
-    
-    .number-box {
-        background: rgba(30, 41, 59, 0.9);
-        padding: 25px 10px;
-        text-align: center;
-        border-radius: 10px;
-        font-size: 32px;
-        font-weight: bold;
-        border: 2px solid;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 90px;
-    }
-    
-    .single-box {
-        border-color: #dc2626;
-        color: #fca5a5;
-        background: rgba(220, 38, 38, 0.1);
-    }
-    
-    .double-box {
-        border-color: #3b82f6;
-        color: #93c5fd;
-        background: rgba(59, 130, 246, 0.1);
-    }
-    
-    .note-box {
-        background: rgba(251, 191, 36, 0.1);
-        border: 1px solid #fbbf24;
-        padding: 15px;
-        border-radius: 8px;
-        margin-top: 20px;
-        color: #fbbf24;
-    }
-</style>
 <!-- CONTACT SECTION -->
 <div class="container">
     <div class="contact-section" style="
@@ -401,7 +752,6 @@
         </button>
     </div>
 </div>
-
 <!-- CONTACT INFO MODAL -->
 <div id="contact-modal" style="
     display: none;
@@ -466,6 +816,7 @@
         </button>
     </div>
 </div>
+
 <!-- FOOTER -->
 <div class="footer" style="
     background: #0f172a;
@@ -489,145 +840,366 @@
     </div>
 </div>
 
+<style>
+    /* ===== NUMBERS DISPLAY STYLES ===== */
+    .numbers-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-top: 15px;
+    }
+    
+    .number-box {
+        background: rgba(30, 41, 59, 0.9);
+        padding: 25px 10px;
+        text-align: center;
+        border-radius: 10px;
+        font-size: 32px;
+        font-weight: bold;
+        border: 2px solid;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 90px;
+    }
+    
+    .single-box {
+        border-color: #dc2626;
+        color: #fca5a5;
+        background: rgba(220, 38, 38, 0.1);
+    }
+    
+    .double-box {
+        border-color: #3b82f6;
+        color: #93c5fd;
+        background: rgba(59, 130, 246, 0.1);
+    }
+</style>
+
 <script>
     // ============================================
-    // MANUAL NUMBER CONTROL SYSTEM
+    // AUTHENTICATION SYSTEM
     // ============================================
     
-    // === MANUAL NUMBERS DATA - YOU EDIT THESE ===
-    // Change these numbers manually whenever you want
-    const manualNumbers = {
-        'sridevi': {
-            singles: [3, 7, 2, 5],      // Edit these 4 numbers
-            doubles: [34, 67, 89, 12]   // Edit these 4 numbers
+    // Demo users database (in real app, use backend)
+    const demoUsers = {
+        'admin': { 
+            password: 'admin123', 
+            name: 'Admin User',
+            email: 'admin@example.com',
+            isPremium: true
         },
-        'milan': {
-            singles: [4, 8, 1, 6],      // Edit these 4 numbers
-            doubles: [45, 78, 23, 56]   // Edit these 4 numbers
-        },
-        'kalyan': {
-            singles: [2, 9, 4, 7],      // Edit these 4 numbers
-            doubles: [67, 34, 89, 21]   // Edit these 4 numbers
-        },
-        'sridevi-night': {
-            singles: [5, 3, 8, 2],      // Edit these 4 numbers
-            doubles: [78, 45, 32, 67]   // Edit these 4 numbers
-        },
-        'milan-night': {
-            singles: [6, 2, 9, 4],      // Edit these 4 numbers
-            doubles: [89, 56, 43, 78]   // Edit these 4 numbers
-        },
-        'main-bazar': {
-            singles: [7, 5, 3, 8],      // Edit these 4 numbers
-            doubles: [91, 67, 34, 89]   // Edit these 4 numbers
+        'user1': { 
+            password: 'user123', 
+            name: 'Demo User',
+            email: 'user@example.com',
+            isPremium: false
         }
     };
     
-    // === MARKET DATA ===
+    // Current user session
+    let currentUser = null;
+    
+    // Manual numbers data
+    const manualNumbers = {
+        'sridevi': { singles: [3,7,2,5], doubles: [34,67,89,12] },
+        'milan': { singles: [4,8,1,6], doubles: [45,78,23,56] },
+        'kalyan': { singles: [2,9,4,7], doubles: [67,34,89,21] },
+        'sridevi-night': { singles: [5,3,8,2], doubles: [78,45,32,67] },
+        'milan-night': { singles: [6,2,9,4], doubles: [89,56,43,78] },
+        'main-bazar': { singles: [7,5,3,8], doubles: [91,67,34,89] }
+    };
+    
     const markets = [
-        { id: 'sridevi', name: 'Sridevi', time: '10:00 AM', type: 'morning' },
-        { id: 'milan', name: 'Milan Day', time: '1:30 PM', type: 'afternoon' },
-        { id: 'kalyan', name: 'Kalyan', time: '2:00 PM', type: 'afternoon' },
-        { id: 'sridevi-night', name: 'Sridevi Night', time: '6:30 PM', type: 'evening' },
-        { id: 'milan-night', name: 'Milan Night', time: '8:00 PM', type: 'evening' },
-        { id: 'main-bazar', name: 'Main Bazar', time: '8:30 PM', type: 'night' }
+        { id: 'sridevi', name: 'Sridevi', time: '10:00 AM', type: 'morning', premium: false },
+        { id: 'milan', name: 'Milan Day', time: '1:30 PM', type: 'afternoon', premium: false },
+        { id: 'kalyan', name: 'Kalyan', time: '2:00 PM', type: 'afternoon', premium: true },
+        { id: 'sridevi-night', name: 'Sridevi Night', time: '6:30 PM', type: 'evening', premium: true },
+        { id: 'milan-night', name: 'Milan Night', time: '8:00 PM', type: 'evening', premium: true },
+        { id: 'main-bazar', name: 'Main Bazar', time: '8:30 PM', type: 'night', premium: true }
     ];
-    
-    // === INITIALIZE ===
-    document.addEventListener('DOMContentLoaded', function() {
-        updateDateTime();
-        loadMarketCards();
-        updateMarketStatus();
-        
-        // Update time every second
-        setInterval(updateDateTime, 1000);
-        // Update status every minute
-        setInterval(updateMarketStatus, 60000);
-    });
-    
-    // === UPDATE DATE & TIME ===
-    function updateDateTime() {
-        const now = new Date();
-        const options = { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-        };
-        
-        const dateString = now.toLocaleDateString('en-IN', options);
-        const timeString = now.toLocaleTimeString('en-IN', {
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: true
+            // === INITIALIZE ===
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDateTime();
+            checkLoginStatus();
+            loadMarketCards();
+            updateMarketStatus();
+            
+            setInterval(updateDateTime, 1000);
+            setInterval(updateMarketStatus, 60000);
         });
         
-        document.getElementById('current-date').textContent = dateString;
-        document.getElementById('current-time').textContent = timeString;
-    }
-    
-    // === LOAD MARKET CARDS ===
-    function loadMarketCards() {
-        const grid = document.getElementById('markets-grid');
-        let html = '';
-        
-        markets.forEach(market => {
-            const status = getMarketStatus(market.time);
-            
-            html += `
-                <div class="market-card" data-type="${market.type}" 
-                     onclick="showMarketNumbers('${market.id}')">
-                    <div class="market-header">
-                        <h3>${market.name}</h3>
-                        <span class="time-badge">${market.time}</span>
-                    </div>
-                    <div class="market-status">
-                        <span class="status ${status}">${status.toUpperCase()}</span>
-                        <p class="market-desc">${market.type} Market</p>
-                    </div>
-                    <i class="fas fa-arrow-right"></i>
-                </div>
-            `;
-        });
-        
-        grid.innerHTML = html;
-    }
-            // === GET MARKET STATUS ===
-        function getMarketStatus(marketTimeStr) {
-            const now = new Date();
-            const currentHours = now.getHours();
-            const currentMinutes = now.getMinutes();
-            const currentTotalMinutes = currentHours * 60 + currentMinutes;
-            
-            // Convert market time to minutes
-            const [time, modifier] = marketTimeStr.split(' ');
-            let [hours, minutes] = time.split(':').map(Number);
-            
-            if (modifier === 'PM' && hours !== 12) hours += 12;
-            if (modifier === 'AM' && hours === 12) hours = 0;
-            
-            const marketTotalMinutes = hours * 60 + minutes;
-            const diff = marketTotalMinutes - currentTotalMinutes;
-            
-            if (Math.abs(diff) <= 30) return 'open';
-            if (diff > 30) return 'upcoming';
-            return 'closed';
+        // === CHECK LOGIN STATUS ===
+        function checkLoginStatus() {
+            const savedUser = localStorage.getItem('matkaUser');
+            if (savedUser) {
+                try {
+                    currentUser = JSON.parse(savedUser);
+                    updateUIForLoggedIn();
+                } catch(e) {
+                    logout();
+                }
+            }
         }
         
-        // === UPDATE MARKET STATUS ===
-        function updateMarketStatus() {
-            const marketCards = document.querySelectorAll('.market-card');
-            marketCards.forEach((card, index) => {
-                const market = markets[index];
-                if (market) {
-                    const status = getMarketStatus(market.time);
-                    const statusSpan = card.querySelector('.status');
-                    
-                    statusSpan.className = `status ${status}`;
-                    statusSpan.textContent = status.toUpperCase();
-                }
+        // === UPDATE UI BASED ON LOGIN ===
+        function updateUIForLoggedIn() {
+            // Update header
+            document.getElementById('logged-out-view').style.display = 'none';
+            document.getElementById('logged-in-view').style.display = 'flex';
+            document.getElementById('display-username').textContent = currentUser.username;
+            
+            // Show/hide premium message
+            document.getElementById('premium-message').style.display = currentUser.isPremium ? 'none' : 'block';
+            
+            // Reload markets to show/hide premium content
+            loadMarketCards();
+        }
+        
+        function updateUIForLoggedOut() {
+            document.getElementById('logged-out-view').style.display = 'block';
+            document.getElementById('logged-in-view').style.display = 'none';
+            document.getElementById('premium-message').style.display = 'block';
+            loadMarketCards();
+        }
+        
+        // === LOGIN MODAL FUNCTIONS ===
+        function showLoginModal() {
+            document.getElementById('login-modal').style.display = 'flex';
+            switchTab('login');
+        }
+        
+        function hideLoginModal() {
+            document.getElementById('login-modal').style.display = 'none';
+            clearAuthForms();
+        }
+        
+        function switchTab(tab) {
+            if (tab === 'login') {
+                document.getElementById('login-form').style.display = 'block';
+                document.getElementById('signup-form').style.display = 'none';
+                document.getElementById('tab-login').style.color = '#fbbf24';
+                document.getElementById('tab-login').style.borderBottom = '3px solid #fbbf24';
+                document.getElementById('tab-signup').style.color = '#94a3b8';
+                document.getElementById('tab-signup').style.borderBottom = 'none';
+            } else {
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('signup-form').style.display = 'block';
+                document.getElementById('tab-signup').style.color = '#fbbf24';
+                document.getElementById('tab-signup').style.borderBottom = '3px solid #fbbf24';
+                document.getElementById('tab-login').style.color = '#94a3b8';
+                document.getElementById('tab-login').style.borderBottom = 'none';
+            }
+            clearAuthMessage();
+        }
+        
+        // === LOGIN FUNCTION ===
+        function login() {
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value;
+            
+            if (!username || !password) {
+                showAuthMessage('Please enter username and password', 'error');
+                return;
+            }
+            
+            // Check demo users
+            if (demoUsers[username] && demoUsers[username].password === password) {
+                currentUser = {
+                    username: username,
+                    name: demoUsers[username].name,
+                    email: demoUsers[username].email,
+                    isPremium: demoUsers[username].isPremium
+                };
+                
+                // Save to localStorage
+                localStorage.setItem('matkaUser', JSON.stringify(currentUser));
+                
+                showAuthMessage('Login successful! Redirecting...', 'success');
+                
+                setTimeout(() => {
+                    hideLoginModal();
+                    updateUIForLoggedIn();
+                }, 1500);
+                
+            } else {
+                showAuthMessage('Invalid username or password', 'error');
+            }
+        }
+        
+        // === SIGNUP FUNCTION ===
+        function signup() {
+            const name = document.getElementById('signup-name').value.trim();
+            const username = document.getElementById('signup-username').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value;
+            const confirm = document.getElementById('signup-confirm').value;
+            
+            // Validation
+            if (!name || !username || !password) {
+                showAuthMessage('Please fill all required fields', 'error');
+                return;
+            }
+            
+            if (password !== confirm) {
+                showAuthMessage('Passwords do not match', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showAuthMessage('Password must be at least 6 characters', 'error');
+                return;
+            }
+            
+            if (demoUsers[username]) {
+                showAuthMessage('Username already exists', 'error');
+                return;
+            }
+            
+            // Create new user (in localStorage only - for demo)
+            const newUser = {
+                username: username,
+                name: name,
+                email: email,
+                isPremium: false, // New users get free trial
+                password: password // In real app, NEVER store password like this
+            };
+            
+            // Add to demo users
+            demoUsers[username] = { 
+                password: password, 
+                name: name,
+                email: email,
+                isPremium: false
+            };
+            
+            // Login the new user
+            currentUser = newUser;
+            localStorage.setItem('matkaUser', JSON.stringify(currentUser));
+            
+            showAuthMessage('Account created successfully! You get 7-day free premium trial.', 'success');
+            
+            setTimeout(() => {
+                hideLoginModal();
+                updateUIForLoggedIn();
+            }, 2000);
+        }
+        
+        // === LOGOUT ===
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('matkaUser');
+            updateUIForLoggedOut();
+            showMarkets(); // Go back to markets page
+        }
+        
+        // === AUTH MESSAGE HELPER ===
+        function showAuthMessage(message, type) {
+            const msgDiv = document.getElementById('auth-message');
+            msgDiv.textContent = message;
+            msgDiv.style.display = 'block';
+            msgDiv.style.background = type === 'success' ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)';
+            msgDiv.style.color = type === 'success' ? '#86efac' : '#fca5a5';
+            msgDiv.style.border = type === 'success' ? '1px solid #86efac' : '1px solid #fca5a5';
+        }
+        
+        function clearAuthMessage() {
+            document.getElementById('auth-message').style.display = 'none';
+        }
+        
+        function clearAuthForms() {
+            document.getElementById('login-username').value = '';
+            document.getElementById('login-password').value = '';
+            document.getElementById('signup-name').value = '';
+            document.getElementById('signup-username').value = '';
+            document.getElementById('signup-email').value = '';
+            document.getElementById('signup-password').value = '';
+            document.getElementById('signup-confirm').value = '';
+            clearAuthMessage();
+        }
+        
+        // === LOAD MARKET CARDS ===
+        function loadMarketCards() {
+            const grid = document.getElementById('markets-grid');
+            let html = '';
+            
+            markets.forEach(market => {
+                const status = getMarketStatus(market.time);
+                const isLocked = market.premium && (!currentUser || !currentUser.isPremium);
+                
+                html += `
+                    <div class="market-card ${isLocked ? 'premium' : ''}" 
+                         data-type="${market.type}" 
+                         onclick="${isLocked ? 'showPremiumMessage()' : `showMarketNumbers('${market.id}')`}">
+                        <div class="market-header">
+                            <h3>${market.name} ${isLocked ? '🔒' : ''}</h3>
+                            <span class="time-badge">${market.time}</span>
+                        </div>
+                        <div class="market-status">
+                            <span class="status ${status}">${status.toUpperCase()}</span>
+                            <p class="market-desc">
+                                ${market.type} Market 
+                                ${isLocked ? '• Premium Access Required' : ''}
+                            </p>
+                        </div>
+                        <i class="fas ${isLocked ? 'fa-lock' : 'fa-arrow-right'}"></i>
+                    </div>
+                `;
             });
+            
+            grid.innerHTML = html;
+        }
+        
+        // === SHOW PREMIUM MESSAGE ===
+        function showPremiumMessage() {
+            showAuthMessageInMain('Login and upgrade to premium to access all markets!');
+        }
+        
+        function showAuthMessageInMain(message) {
+            // Create or update message display
+            let msgDiv = document.getElementById('main-message');
+            if (!msgDiv) {
+                msgDiv = document.createElement('div');
+                msgDiv.id = 'main-message';
+                msgDiv.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #f59e0b;
+                    color: #78350f;
+                    padding: 15px 25px;
+                    border-radius: 8px;
+                    z-index: 1001;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                `;
+                document.body.appendChild(msgDiv);
+            }
+            
+            msgDiv.innerHTML = `
+                ${message}
+                <button onclick="showLoginModal()" style="
+                    background: #78350f;
+                    color: white;
+                    border: none;
+                    padding: 5px 15px;
+                    border-radius: 15px;
+                    margin-left: 15px;
+                    cursor: pointer;
+                ">Login</button>
+                <button onclick="this.parentElement.remove()" style="
+                    background: none;
+                    border: none;
+                    color: #78350f;
+                    margin-left: 10px;
+                    cursor: pointer;
+                ">×</button>
+            `;
+            
+            setTimeout(() => {
+                if (msgDiv.parentElement) {
+                    msgDiv.remove();
+                }
+            }, 5000);
         }
         
         // === SHOW MARKET NUMBERS ===
@@ -646,35 +1218,99 @@
             document.getElementById('market-title').textContent = `${market.name} Market`;
             document.getElementById('market-time').textContent = `Update Time: ${market.time} Daily`;
             
-            // Load single numbers
-            const singleGrid = document.getElementById('single-numbers');
-            singleGrid.innerHTML = numbers.singles.map(num => `
-                <div class="number-box single-box">${num}</div>
-            `).join('');
+            // Check if premium access required
+            const isPremiumRequired = market.premium && (!currentUser || !currentUser.isPremium);
             
-            // Load double numbers
-            const doubleGrid = document.getElementById('double-numbers');
-            doubleGrid.innerHTML = numbers.doubles.map(num => `
-                <div class="number-box double-box">${num}</div>
-            `).join('');
+            if (isPremiumRequired) {
+                // Show login required message
+                document.getElementById('numbers-login-required').style.display = 'block';
+                document.getElementById('numbers-display-content').style.display = 'none';
+            } else {
+                // Show numbers
+                document.getElementById('numbers-login-required').style.display = 'none';
+                document.getElementById('numbers-display-content').style.display = 'block';
+                
+                // Load single numbers
+                const singleGrid = document.getElementById('single-numbers');
+                singleGrid.innerHTML = numbers.singles.map(num => `
+                    <div class="number-box single-box">${num}</div>
+                `).join('');
+                
+                // Load double numbers
+                const doubleGrid = document.getElementById('double-numbers');
+                doubleGrid.innerHTML = numbers.doubles.map(num => `
+                    <div class="number-box double-box">${num}</div>
+                `).join('');
+            }
             
-            // Scroll to top
             window.scrollTo(0, 0);
         }
         
         // === SHOW MARKETS (Back Button) ===
         function showMarkets() {
-            // Show markets grid
             document.querySelector('.markets-section').style.display = 'block';
-            
-            // Hide numbers display
             document.getElementById('numbers-display').style.display = 'none';
-            
-            // Scroll to top
             window.scrollTo(0, 0);
         }
         
-        // === CONTACT MODAL FUNCTIONS ===
+        // === MARKET STATUS FUNCTIONS ===
+        function getMarketStatus(marketTimeStr) {
+            const now = new Date();
+            const currentHours = now.getHours();
+            const currentMinutes = now.getMinutes();
+            const currentTotalMinutes = currentHours * 60 + currentMinutes;
+            
+            const [time, modifier] = marketTimeStr.split(' ');
+            let [hours, minutes] = time.split(':').map(Number);
+            
+            if (modifier === 'PM' && hours !== 12) hours += 12;
+            if (modifier === 'AM' && hours === 12) hours = 0;
+            
+            const marketTotalMinutes = hours * 60 + minutes;
+            const diff = marketTotalMinutes - currentTotalMinutes;
+            
+            if (Math.abs(diff) <= 30) return 'open';
+            if (diff > 30) return 'upcoming';
+            return 'closed';
+        }
+        
+        function updateMarketStatus() {
+            const marketCards = document.querySelectorAll('.market-card');
+            marketCards.forEach((card, index) => {
+                const market = markets[index];
+                if (market) {
+                    const status = getMarketStatus(market.time);
+                    const statusSpan = card.querySelector('.status');
+                    
+                    statusSpan.className = `status ${status}`;
+                    statusSpan.textContent = status.toUpperCase();
+                }
+            });
+        }
+        
+        // === DATE & TIME ===
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            
+            const dateString = now.toLocaleDateString('en-IN', options);
+            const timeString = now.toLocaleTimeString('en-IN', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            });
+            
+            document.getElementById('current-date').textContent = dateString;
+            document.getElementById('current-time').textContent = timeString;
+        }
+        
+        // === CONTACT FUNCTIONS ===
         function showContactInfo() {
             document.getElementById('contact-modal').style.display = 'flex';
         }
@@ -683,7 +1319,7 @@
             document.getElementById('contact-modal').style.display = 'none';
         }
         
-        // === COPY NUMBER FUNCTION ===
+        // === COPY NUMBER ===
         function copyNumber() {
             const number = "7353547650";
             navigator.clipboard.writeText(number).then(() => {
@@ -691,25 +1327,17 @@
             });
         }
         
-        // === HOW TO UPDATE NUMBERS MANUALLY ===
+        // === DEMO CREDENTIALS ===
         /*
-        To update numbers manually:
+        Demo Login Credentials:
         
-        1. Find the 'manualNumbers' object in the code (around line 400)
-        2. Edit the numbers for each market:
-           - singles: [3, 7, 2, 5] → Change these 4 single-digit numbers
-           - doubles: [34, 67, 89, 12] → Change these 4 double-digit numbers
+        1. Premium Account:
+           Username: admin
+           Password: admin123
         
-        3. Save the file and upload to GitHub
-        
-        Example: To update Sridevi market numbers to [1,2,3,4] and [11,22,33,44]
-        Change:
-            'sridevi': {
-                singles: [1, 2, 3, 4],    ← Edit these
-                doubles: [11, 22, 33, 44] ← Edit these
-            },
-        
-        That's it! The website will show your updated numbers.
+        2. Free Account:
+           Username: user1
+           Password: user123
         */
     </script>
 </body>
