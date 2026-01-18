@@ -4,8 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shree Matka Boss - Daily Updates</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Add ALL CSS styles from style.css here */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #f1f5f9; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        /* Add all other CSS styles here... */
+        
+        /* Add this new style for market content */
+        .market-content { display: none; }
+        .market-content.active { display: block; }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -17,141 +27,73 @@
             </div>
             <div class="date-display">
                 <p id="current-date"></p>
-                <p id="current-time"></p>
             </div>
         </div>
     </header>
 
-    <!-- Disclaimer Banner -->
-    <div class="disclaimer-banner">
+    <!-- Navigation -->
+    <nav class="nav">
         <div class="container">
-            <p><i class="fas fa-exclamation-triangle"></i> <strong>DISCLAIMER:</strong> This site is for entertainment purposes only. Gambling is illegal in India. 18+ only.</p>
+            <button onclick="showHome()" class="nav-btn active"><i class="fas fa-home"></i> Home</button>
+            <button onclick="showMarket('sridevi')" class="nav-btn"><i class="fas fa-sun"></i> Sridevi</button>
+            <button onclick="showMarket('milan')" class="nav-btn"><i class="fas fa-clock"></i> Milan</button>
+            <button onclick="showMarket('kalyan')" class="nav-btn"><i class="fas fa-chart-line"></i> Kalyan</button>
+            <button onclick="showMarket('srideviNight')" class="nav-btn"><i class="fas fa-moon"></i> S. Night</button>
+            <button onclick="showMarket('milanNight')" class="nav-btn"><i class="fas fa-star"></i> M. Night</button>
+            <button onclick="showMarket('mainBazar')" class="nav-btn"><i class="fas fa-bazaar"></i> Main Bazar</button>
+            <button onclick="showContact()" class="nav-btn"><i class="fas fa-phone"></i> Contact</button>
         </div>
-    </div>
+    </nav>
 
-    <!-- Main Content -->
-    <main class="container">
-        <!-- Current Date Section -->
-        <section class="date-section">
-            <h2><i class="far fa-calendar-alt"></i> Today's Date</h2>
-            <div class="date-card">
-                <h3 id="full-date">Loading...</h3>
-                <p class="day-time" id="day-time"></p>
-            </div>
-        </section>
-
-        <!-- Markets Section -->
-        <section class="markets-section">
-            <h2><i class="fas fa-chart-line"></i> Today's Market Timings</h2>
-            <p class="section-subtitle">Click on any market to view today's predictions</p>
-            
-            <div class="markets-grid">
-                <!-- Sridevi -->
-                <a href="markets/sridevi.html" class="market-card morning">
-                    <div class="market-header">
-                        <h3>Sridevi</h3>
-                        <span class="time-badge">10:00 AM</span>
-                    </div>
-                    <div class="market-status">
-                        <span class="status open">OPEN</span>
-                        <p class="market-desc">Morning Market</p>
-                    </div>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-
-                <!-- Milan -->
-                <a href="markets/milan.html" class="market-card afternoon">
-                    <div class="market-header">
-                        <h3>Milan Day</h3>
-                        <span class="time-badge">1:30 PM</span>
-                    </div>
-                    <div class="market-status">
-                        <span class="status open">OPEN</span>
-                        <p class="market-desc">Afternoon Market</p>
-                    </div>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-
-                <!-- Kalyan -->
-                <a href="markets/kalyan.html" class="market-card afternoon">
-                    <div class="market-header">
-                        <h3>Kalyan</h3>
-                        <span class="time-badge">2:00 PM</span>
-                    </div>
-                    <div class="market-status">
-                        <span class="status open">OPEN</span>
-                        <p class="market-desc">Afternoon Market</p>
-                    </div>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-
-                <!-- Sridevi Night -->
-                <a href="markets/sridevi-night.html" class="market-card evening">
-                    <div class="market-header">
-                        <h3>Sridevi Night</h3>
-                        <span class="time-badge">6:30 PM</span>
-                    </div>
-                    <div class="market-status">
-                        <span class="status upcoming">UPCOMING</span>
-                        <p class="market-desc">Evening Market</p>
-                    </div>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-
-                <!-- Milan Night -->
-                <a href="markets/milan-night.html" class="market-card evening">
-                    <div class="market-header">
-                        <h3>Milan Night</h3>
-                        <span class="time-badge">8:00 PM</span>
-                    </div>
-                    <div class="market-status">
-                        <span class="status upcoming">UPCOMING</span>
-                        <p class="market-desc">Evening Market</p>
-                    </div>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-
-                <!-- Main Bazar -->
-                <a href="markets/main-bazar.html" class="market-card night">
-                    <div class="market-header">
-                        <h3>Main Bazar</h3>
-                        <span class="time-badge">8:30 PM</span>
-                    </div>
-                    <div class="market-status">
-                        <span class="status upcoming">UPCOMING</span>
-                        <p class="market-desc">Night Market</p>
-                    </div>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section class="contact-section">
-            <div class="contact-card">
-                <h3><i class="fas fa-phone-alt"></i> Contact For Premium Tips</h3>
-                <p>For single open and single jodi fix game predictions</p>
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-mobile-alt"></i>
-                        <div>
-                            <p class="contact-label">Mobile Number</p>
-                            <p class="contact-value">+91 73535 47650</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-clock"></i>
-                        <div>
-                            <p class="contact-label">Available</p>
-                            <p class="contact-value">10:00 AM - 10:00 PM</p>
-                        </div>
-                    </div>
+    <!-- Main Content Area -->
+    <main class="container" id="content-area">
+        <!-- Home Content (Default) -->
+        <div id="home-content" class="market-content active">
+            <!-- Your original home page content here -->
+            <section class="date-section">
+                <h2><i class="far fa-calendar-alt"></i> Today's Date</h2>
+                <div class="date-card">
+                    <h3 id="full-date">Loading...</h3>
+                    <p class="day-time" id="day-time"></p>
                 </div>
-                <a href="contact.html" class="contact-btn">
-                    <i class="fas fa-comments"></i> Contact Now
-                </a>
-            </div>
-        </section>
+            </section>
+
+            <section class="markets-section">
+                <h2><i class="fas fa-chart-line"></i> Today's Market Timings</h2>
+                <div class="markets-grid">
+                    <!-- Market cards will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <section class="contact-section">
+                <div class="contact-card">
+                    <h3><i class="fas fa-phone-alt"></i> Contact For Premium Tips</h3>
+                    <p>For single open and single jodi fix game predictions</p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-mobile-alt"></i>
+                            <div>
+                                <p class="contact-label">Mobile Number</p>
+                                <p class="contact-value">+91 73535 47650</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="showContact()" class="contact-btn">
+                        <i class="fas fa-comments"></i> Contact Now
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Market Content (Hidden by default) -->
+        <div id="market-content" class="market-content">
+            <!-- Market content will be loaded here by JavaScript -->
+        </div>
+
+        <!-- Contact Content (Hidden by default) -->
+        <div id="contact-content" class="market-content">
+            <!-- Contact content will be loaded here -->
+        </div>
     </main>
 
     <!-- Footer -->
@@ -159,14 +101,207 @@
         <div class="container">
             <p>&copy; 2024 Shree Matka Boss. All rights reserved.</p>
             <p class="footer-disclaimer">This website is for entertainment purposes only. We do not promote gambling.</p>
-            <div class="footer-links">
-                <a href="#">Privacy Policy</a> | 
-                <a href="#">Terms of Service</a> | 
-                <a href="contact.html">Contact</a>
-            </div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // All JavaScript code in one file
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDateTime();
+            loadMarketCards();
+        });
+
+        function showHome() {
+            document.getElementById('home-content').classList.add('active');
+            document.getElementById('market-content').classList.remove('active');
+            document.getElementById('contact-content').classList.remove('active');
+            updateNavButtons('home');
+        }
+
+        function showMarket(marketName) {
+            document.getElementById('home-content').classList.remove('active');
+            document.getElementById('market-content').classList.add('active');
+            document.getElementById('contact-content').classList.remove('active');
+            
+            // Load market data
+            loadMarketData(marketName);
+            updateNavButtons(marketName);
+        }
+
+        function showContact() {
+            document.getElementById('home-content').classList.remove('active');
+            document.getElementById('market-content').classList.remove('active');
+            document.getElementById('contact-content').classList.add('active');
+            
+            // Load contact content
+            loadContactContent();
+            updateNavButtons('contact');
+        }
+
+        function loadMarketCards() {
+            const markets = [
+                { name: 'Sridevi', time: '10:00 AM', type: 'morning' },
+                { name: 'Milan Day', time: '1:30 PM', type: 'afternoon' },
+                { name: 'Kalyan', time: '2:00 PM', type: 'afternoon' },
+                { name: 'Sridevi Night', time: '6:30 PM', type: 'evening' },
+                { name: 'Milan Night', time: '8:00 PM', type: 'evening' },
+                { name: 'Main Bazar', time: '8:30 PM', type: 'night' }
+            ];
+
+            const grid = document.querySelector('.markets-grid');
+            grid.innerHTML = markets.map(market => `
+                <div class="market-card ${market.type}" onclick="showMarket('${market.name.toLowerCase().replace(' ', '')}')">
+                    <div class="market-header">
+                        <h3>${market.name}</h3>
+                        <span class="time-badge">${market.time}</span>
+                    </div>
+                    <div class="market-status">
+                        <span class="status open">OPEN</span>
+                        <p class="market-desc">${market.type} Market</p>
+                    </div>
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            `).join('');
+        }
+
+        function loadMarketData(marketName) {
+            const marketContent = document.getElementById('market-content');
+            
+            // Generate random numbers
+            const singles = generateUniqueNumbers(4, 1, 9);
+            const doubles = generateUniqueNumbers(4, 10, 99);
+            
+            // Market timing data
+            const marketTimes = {
+                sridevi: '10:00 AM',
+                milanday: '1:30 PM',
+                kalyan: '2:00 PM',
+                sridevinight: '6:30 PM',
+                milannight: '8:00 PM',
+                mainbazar: '8:30 PM'
+            };
+
+            marketContent.innerHTML = `
+                <div class="market-details">
+                    <a href="javascript:void(0)" onclick="showHome()" class="back-btn">
+                        <i class="fas fa-arrow-left"></i> Back to Markets
+                    </a>
+                    
+                    <div class="market-info">
+                        <h2><i class="fas fa-chart-line"></i> ${marketName.toUpperCase()} Market</h2>
+                        <p class="update-time">Update Time: ${marketTimes[marketName] || 'Daily'}</p>
+                        <p class="market-status">Status: <span class="status open">OPEN</span></p>
+                        
+                        <div class="numbers-container">
+                            <div class="number-section">
+                                <h3><i class="fas fa-dice-one"></i> Single Numbers (1-9)</h3>
+                                <div class="number-grid">
+                                    ${singles.map(num => `<div class="number-box">${num}</div>`).join('')}
+                                </div>
+                            </div>
+                            
+                            <div class="number-section">
+                                <h3><i class="fas fa-dice-two"></i> Double Numbers (10-99)</h3>
+                                <div class="number-grid">
+                                    ${doubles.map(num => `<div class="number-box double-box">${num}</div>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <h3><i class="fas fa-phone-alt"></i> Contact For Premium Tips</h3>
+                        <p>For single open and single jodi fix game predictions</p>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-mobile-alt"></i>
+                                <div>
+                                    <p class="contact-label">Mobile Number</p>
+                                    <p class="contact-value">+91 73535 47650</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="copyNumber()" class="contact-btn">
+                            <i class="fas fa-copy"></i> Copy Number
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadContactContent() {
+            const contactContent = document.getElementById('contact-content');
+            
+            contactContent.innerHTML = `
+                <div class="contact-header">
+                    <h2><i class="fas fa-headset"></i> Contact Our Expert</h2>
+                    <p>Get premium single open and single jodi fix game predictions</p>
+                </div>
+
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+                        <h3>WhatsApp</h3>
+                        <p>Chat directly with our expert</p>
+                        <a href="https://wa.me/917353547650" class="whatsapp-btn" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                        </a>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+                        <h3>Direct Call</h3>
+                        <p>Call for detailed predictions</p>
+                        <a href="tel:+917353547650" class="call-btn">
+                            <i class="fas fa-phone"></i> Call Now
+                        </a>
+                    </div>
+                </div>
+
+                <div class="market-info">
+                    <h3><i class="fas fa-clock"></i> Available Hours</h3>
+                    <ul>
+                        <li><strong>Morning:</strong> 9:00 AM - 12:00 PM</li>
+                        <li><strong>Afternoon:</strong> 2:00 PM - 5:00 PM</li>
+                        <li><strong>Evening:</strong> 7:00 PM - 10:00 PM</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        function generateUniqueNumbers(count, min, max) {
+            const numbers = [];
+            while(numbers.length < count) {
+                const num = Math.floor(Math.random() * (max - min + 1)) + min;
+                if(!numbers.includes(num)) numbers.push(num);
+            }
+            return numbers;
+        }
+
+        function updateDateTime() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateString = now.toLocaleDateString('en-IN', options);
+            const timeString = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+            
+            document.getElementById('current-date').textContent = dateString;
+            document.getElementById('full-date').textContent = dateString;
+            document.getElementById('day-time').textContent = `${now.toLocaleDateString('en-IN', { weekday: 'long' })} • ${timeString}`;
+        }
+
+        function updateNavButtons(active) {
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.nav-btn[onclick*="${active}"]`).classList.add('active');
+        }
+
+        function copyNumber() {
+            navigator.clipboard.writeText("7353547650").then(() => {
+                alert("Number copied to clipboard: 7353547650");
+            });
+        }
+
+        // Update time every minute
+        setInterval(updateDateTime, 60000);
+    </script>
 </body>
-</html>
+    </html>
