@@ -420,7 +420,7 @@
         </div>
     </div>
 </div>
-    <!-- ===================== -->
+<!-- ===================== -->
 <!-- CONTACT SECTION -->
 <!-- ===================== -->
 <div class="container" style="margin: 40px auto;">
@@ -735,8 +735,7 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Call Now Button -->
+                <!-- Call Now Button -->
         <div style="text-align: center; margin-top: 35px;">
             <a href="tel:+917353547650" style="
                 display: inline-block;
@@ -930,8 +929,97 @@
                 showNotification('Failed to copy. Please copy manually: ' + text);
             }
         } catch (err) {
-            showNot
-
+            showNotification('Failed to copy. Please copy manually: ' + text);
+        }
+        
+        document.body.removeChild(textArea);
+    }
+    
+    // Show notification
+    function showNotification(message) {
+        // Remove existing notification
+        const existing = document.querySelector('.copy-notification');
+        if (existing) {
+            existing.remove();
+        }
+        
+        // Create notification
+        const notification = document.createElement('div');
+        notification.className = 'copy-notification';
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            z-index: 10000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s ease;
+            font-weight: bold;
+        `;
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 300);
+        }, 3000);
+    }
+    
+    // Animation styles
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        
+        /* Responsive styles for contact section */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .contact-section {
+                padding: 20px;
+            }
+            
+            .contact-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .phone-number {
+                font-size: 22px;
+            }
+        }
+        
+        /* Hover effects */
+        button:hover, a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.5);
+        }
+        
+        /* WhatsApp specific hover */
+        a[href*="whatsapp"]:hover {
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+    
 <!-- NUMBERS DISPLAY -->
 <div id="numbers-display" style="display: none;">
     <div class="container">
